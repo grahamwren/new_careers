@@ -14,7 +14,7 @@ defmodule NewCareersApi.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :pasword])
+    |> cast(attrs, [:name, :email, :password])
     |> put_pass_hash
     |> unique_constraint(:email)
     |> validate_required([:email, :password_hash])
