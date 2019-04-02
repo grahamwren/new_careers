@@ -23,6 +23,7 @@ defmodule NewCareersApiWeb do
 
       import Plug.Conn
       import NewCareersApiWeb.Gettext
+      import NewCareersApi.AuthorizationHelpers
       alias NewCareersApiWeb.Router.Helpers, as: Routes
     end
   end

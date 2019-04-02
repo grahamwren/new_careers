@@ -20,5 +20,6 @@ defmodule NewCareersApiWeb.Router do
 
     pipe_through :with_auth
     resources "/users", UserController, except: [:new, :create, :edit]
+    resources "/jobs", JobController, except: [:new, :edit]
   end
 end

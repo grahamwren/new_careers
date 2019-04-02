@@ -8,6 +8,8 @@ defmodule NewCareersApi.Users.User do
     field :password, :string, virtual: true
     field :password_hash, :string
 
+    has_many :jobs, NewCareersApi.Jobs.Job, foreign_key: :contact_id
+
     timestamps()
   end
 
