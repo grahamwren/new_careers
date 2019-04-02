@@ -15,6 +15,8 @@ defmodule NewCareersApi.Jobs.Job do
 
     belongs_to :contact, NewCareersApi.Users.User
 
+    has_many :apps, NewCareersApi.Apps.App
+
     timestamps()
   end
 

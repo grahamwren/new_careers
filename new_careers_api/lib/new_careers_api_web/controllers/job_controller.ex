@@ -3,6 +3,7 @@ defmodule NewCareersApiWeb.JobController do
 
   alias NewCareersApi.Jobs
   alias NewCareersApi.Jobs.Job
+  alias NewCareersApi.Apps
 
   action_fallback NewCareersApiWeb.FallbackController
 
@@ -46,6 +47,17 @@ defmodule NewCareersApiWeb.JobController do
       with {:ok, %Job{}} <- Jobs.delete_job(job) do
         send_resp(conn, :no_content, "")
       end
+    end
+  end
+
+  def apply(conn, %{"job_id" => job_id}) do
+    app_params = %{user_id: conn.assigns.user.id, job_id: job_id}
+    with {:ok, app} <- Apps.create_app(app_params) do
+      conn
+      |> put_status(:created)
+      |> put_resp_header("location", Routes.app_path(conn, :show, app))
+      |> put_view(NewCareersApiWeb.AppView)
+      |> render("show.json", app: app)
     end
   end
 end

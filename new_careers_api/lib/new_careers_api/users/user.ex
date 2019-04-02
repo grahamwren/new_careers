@@ -9,6 +9,7 @@ defmodule NewCareersApi.Users.User do
     field :password_hash, :string
 
     has_many :jobs, NewCareersApi.Jobs.Job, foreign_key: :contact_id
+    has_many :apps, NewCareersApi.Apps.App
 
     timestamps()
   end

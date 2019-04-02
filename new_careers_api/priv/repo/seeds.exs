@@ -12,6 +12,7 @@
 alias NewCareersApi.Repo
 alias NewCareersApi.Users.User
 alias NewCareersApi.Jobs.Job
+alias NewCareersApi.Apps.App
 
 %{password_hash: password_hash} = Argon2.add_hash("password")
 
@@ -21,19 +22,19 @@ g = Repo.insert!(%User{
   password_hash: password_hash
 })
 
-_alex = Repo.insert!(%User{
+alex = Repo.insert!(%User{
   name: "Alex",
   email: "alex@mic.com",
   password_hash: password_hash
 })
 
-_blake = Repo.insert!(%User{
+blake = Repo.insert!(%User{
   name: "Blake",
   email: "blake@mic.com",
   password_hash: password_hash
 })
 
-_job1 = Repo.insert!(%Job{
+job1 = Repo.insert!(%Job{
   title: "Software Engineer",
   description: "Talented software engineer!",
   company: "Software.com",
@@ -44,7 +45,7 @@ _job1 = Repo.insert!(%Job{
 })
 
 
-_job2 = Repo.insert!(%Job{
+job2 = Repo.insert!(%Job{
   title: "Software Manager",
   description: "Talented software manager!",
   company: "Software.com",
@@ -52,4 +53,19 @@ _job2 = Repo.insert!(%Job{
   salary: 3000,
   salary_type: 1,
   contact_id: g.id
+})
+
+_app1 = Repo.insert!(%App{
+  user_id: alex.id,
+  job_id: job1.id
+})
+
+_app2 = Repo.insert!(%App{
+  user_id: alex.id,
+  job_id: job2.id
+})
+
+_app3 = Repo.insert!(%App{
+  user_id: blake.id,
+  job_id: job1.id
 })
