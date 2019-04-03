@@ -60,4 +60,16 @@ defmodule NewCareersApiWeb.JobController do
       |> render("show.json", app: app)
     end
   end
+
+  def search(conn, %{"q" => query, "ob" => order_by, "dir" => order_dir}),
+      do: search_helper(conn, query, order_by, order_dir)
+  def search(conn, %{"q" => query, "ob" => order_by}),
+      do: search_helper(conn, query, order_by)
+  def search(conn, %{"q" => query}),
+      do: search_helper(conn, query)
+
+  defp search_helper(conn, query, order_by \\ "title", order_dir \\ "desc") do
+    jobs = Jobs.search_jobs(query, order_by, order_dir)
+    render(conn, "index.json", jobs: jobs)
+  end
 end

@@ -21,6 +21,23 @@ defmodule NewCareersApi.Jobs do
     Repo.all(Job)
   end
 
+  # TODO: do order_by and order_dir
+  def search_jobs(text, order_by, order_dir) do
+    search_text = "%" <> sanitize_like_str(text) <> "%"
+    Repo.all(from job in Job,
+                    where: ilike(job.title, ^search_text) or
+                           ilike(job.description, ^search_text) or
+                           ilike(job.company, ^search_text) or
+                           ilike(job.location, ^search_text))
+  end
+
+  defp sanitize_like_str(str) do
+    # remove non word characters, allows: [a-zA-Z0-9_ ]
+    str = Regex.replace(~r/[^\w ]/, str, "", global: true)
+    # escape "_" and "\" to "\_" or "\_" because is significant in like expr
+    Regex.replace(~r/([_\\])/, str, "\\\\\\1", global: true)
+  end
+
   @doc """
   Gets a single job.
 
