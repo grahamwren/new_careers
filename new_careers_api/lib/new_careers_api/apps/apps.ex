@@ -7,6 +7,7 @@ defmodule NewCareersApi.Apps do
   alias NewCareersApi.Repo
 
   alias NewCareersApi.Users.User
+  alias NewCareersApi.Jobs.Job
   alias NewCareersApi.Apps.App
 
   @doc """
@@ -26,6 +27,14 @@ defmodule NewCareersApi.Apps do
   def list_apps_for_user(id) do
     Repo.all(from a in App, where: a.user_id == ^id)
   end
+
+  def list_apps_for_job(%Job{id: id} = job),
+      do: Repo.all(from a in App, where: a.job_id == ^id)
+          |> Enum.map(fn a -> %App{a | job: job} end)
+  def list_apps_for_job(id),
+      do: Repo.all(from a in App, where: a.job_id == ^id)
+          |> Repo.preload(:job)
+
 
   @doc """
   Gets a single app.

@@ -3,12 +3,28 @@ defmodule NewCareersApiWeb.AppController do
 
   alias NewCareersApi.Apps
   alias NewCareersApi.Apps.App
+  alias NewCareersApi.Jobs
+  alias NewCareersApi.Jobs.Job
 
   action_fallback NewCareersApiWeb.FallbackController
 
   def index(conn, %{"user_id" => user_id}) do
-    apps = Apps.list_apps()
+    apps =
+      Apps.list_apps_for_user(user_id)
+      |> Enum.filter(&authorize(conn, :show, &1))
+
     render(conn, "index.json", apps: apps)
+  end
+
+  def index(conn, %{"job_id" => job_id}) do
+    with %Job{} = job = Jobs.get_job!(job_id) do
+      with :ok <- authorize!(conn, :update, job) do
+        apps =
+          Apps.list_apps_for_job(job)
+          |> Enum.filter(&authorize(conn, :show, &1))
+        render(conn, "index.json", apps: apps)
+      end
+    end
   end
 
   def create(conn, %{"app" => app_params}) do

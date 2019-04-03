@@ -1,6 +1,8 @@
 defmodule NewCareersApi.AuthorizationHelpers do
+  alias NewCareersApi.Repo
   alias NewCareersApi.Jobs.Job
   alias NewCareersApi.Users.User
+  alias NewCareersApi.Apps.App
 
   def authorize(conn, action, resource, params \\ %{}),
       do: authorize_helper(conn, action, resource, params)
@@ -25,6 +27,25 @@ defmodule NewCareersApi.AuthorizationHelpers do
   defp authorize_helper(_conn, :show, %User{}, _params), do: true
   defp authorize_helper(conn, _action, %User{} = user, _params),
        do: match_user_id(conn, user)
+
+  # Apps ============================================================
+  #   create - allowed if creating for self
+  defp authorize_helper(conn, :create, %App{}, params),
+       do: match_user_id(conn, params["user_id"])
+  #   show - allowed for user who owns app or user who owns job
+  defp authorize_helper(conn, :show, %App{} = app, _params) do
+    match_user_id(conn, app.user_id) ||
+    match_user_id(conn, Repo.preload(app, :job).job.contact_id)
+  end
+  #   update - allowed for job owner to update status, no update of job_id or user_id
+  defp authorize_helper(conn, :update, %App{} = app, params) do
+    !params["user_id"] &&
+    !params["job_id"] &&
+    match_user_id(conn, Repo.preload(app, :job).job.contact_id)
+  end
+  #   delete - allowed for user who posted app
+  defp authorize_helper(conn, :delete, %App{user_id: user_id}, _params),
+       do: match_user_id(conn, user_id)
 
   # Default to block
   defp authorize_helper(_conn, _action, _resource, _params), do: false

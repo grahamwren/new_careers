@@ -12,6 +12,8 @@ defmodule NewCareersApiWeb.AppView do
 
   def render("app.json", %{app: app}) do
     %{id: app.id,
-      status: app.status}
+      status: app.status,
+      user_id: app.user_id,
+      job_id: app.job_id}
   end
 end

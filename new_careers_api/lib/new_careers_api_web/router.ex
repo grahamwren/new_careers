@@ -22,10 +22,12 @@ defmodule NewCareersApiWeb.Router do
     resources "/users", UserController, except: [:new, :create, :edit] do
       get "/apps", AppController, :index
     end
+
     resources "/jobs", JobController, except: [:new, :edit] do
       get "/apps", AppController, :index
-      post "/apply", JobController, :apply
+      post "/apply", JobController, :apply, as: :apply
     end
+
     resources "/apps", AppController, except: [:index, :new, :edit]
   end
 end
