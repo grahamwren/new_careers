@@ -61,11 +61,11 @@ defmodule NewCareersApiWeb.JobController do
     end
   end
 
-  def search(conn, %{"q" => query} = params) do
+  def search(conn, params) do
     jobs = Jobs.search_jobs(
-      query,
-      params["ob"] || "title",
-      params["dir"] || "desc",
+      params["q"],
+      params["ob"],
+      params["dir"],
       params["start"],
       params["lim"])
     render(conn, "index.json", jobs: jobs)

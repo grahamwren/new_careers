@@ -24,14 +24,18 @@ defmodule NewCareersApi.Jobs do
   # TODO: do order_by and order_dir
   def search_jobs(text, order_by, order_dir, start_n, limit) do
     search_text = "%" <> sanitize_like_str(text) <> "%"
-    {start_n, _} = Integer.parse(start_n || "0")
-    {limit, _} = if limit, do: Integer.parse(limit), else: {50, nil}
-    limit = if limit > 100, do: 100, else: limit
+
+    {start_n, _} = if start_n && start_n !== "", do: Integer.parse(start_n), else: {0, nil}
+    start_n = if start_n < 0, do: 0, else: start_n
+
+    {limit, _} = if limit && limit !== "", do: Integer.parse(limit), else: {50, nil}
+    limit = if limit > 100 || limit < 0, do: 100, else: limit
 
     order_dir = if Enum.member?(["asc", "desc"], order_dir),
                    do: String.to_atom(order_dir),
                    else: :desc
-    order_by = String.to_atom(order_by)
+
+    order_by = if order_by, do: String.to_atom(order_by), else: :""
     order_by = if Map.has_key?(%Job{}, order_by), do: order_by, else: :title
 
     Repo.all(from job in Job,
@@ -45,10 +49,14 @@ defmodule NewCareersApi.Jobs do
   end
 
   defp sanitize_like_str(str) do
-    # remove non word characters, allows: [a-zA-Z0-9_ .]
-    str = Regex.replace(~r/[^\w \.\-]/, str, "", global: true)
-    # escape "_" and "\" to "\_" or "\_" because is significant in like expr
-    Regex.replace(~r/([_\\])/, str, "\\\\\\1", global: true)
+    if str do
+      # remove non word characters, allows: [a-zA-Z0-9_ .]
+      str = Regex.replace(~r/[^\w \.\-]/, str, "", global: true)
+      # escape "_" and "\" to "\_" or "\_" because is significant in like expr
+      Regex.replace(~r/([_\\])/, str, "\\\\\\1", global: true)
+    else
+      ""
+    end
   end
 
   @doc """
