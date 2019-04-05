@@ -1,6 +1,6 @@
-import {Component} from 'react';
-import {connect} from 'react-redux';
-import {loggedOut} from '../../api';
+import { Component } from 'react';
+import { connect } from 'react-redux';
+import { loggedOut } from '../../api';
 
 class Logout extends Component {
   componentDidMount() {
@@ -12,4 +12,4 @@ class Logout extends Component {
     return null;
   }
 }
-export default connect(undefined, {loggedOut})(Logout);
+export default connect(undefined, { loggedOut })(Logout);

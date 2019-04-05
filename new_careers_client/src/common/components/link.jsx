@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from '@emotion/styled/macro';
 import Typography from '@material-ui/core/Typography';
 

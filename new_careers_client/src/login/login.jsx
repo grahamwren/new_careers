@@ -1,16 +1,14 @@
-import React, {PureComponent} from 'react';
-import {SubmissionError} from 'redux-form';
-import {LoginContainer} from './theme';
+import React, { PureComponent } from 'react';
+import { SubmissionError } from 'redux-form';
+import { LoginContainer } from './theme';
 import LoginForm from './login-form';
 import api from '../api';
 
 export default class Login extends PureComponent {
-  async loginUser({email, password}) {
-    try {
-      const {data} = await api.loginUser(email, password);
-      this.props.loggedIn(data);
-      this.props.history.push('/');
-    } catch (error) {
+  loginUser({ email, password }) {
+    const { loggedIn, history } = this.props;
+    const cb = d => loggedIn(d) && history.push('/');
+    api.loginUser(email, password).then(cb, (error) => {
       if (error.status === 401) {
         throw new SubmissionError({
           email: 'Login information is invalid',
@@ -18,15 +16,13 @@ export default class Login extends PureComponent {
         });
       }
       throw error.statusText;
-    }
+    });
   }
 
   render() {
-
-
     return (
       <LoginContainer>
-        <LoginForm onSubmit={data => this.loginUser(data)}/>
+        <LoginForm onSubmit={data => this.loginUser(data)} />
       </LoginContainer>
     );
   }

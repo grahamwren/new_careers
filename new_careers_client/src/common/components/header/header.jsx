@@ -1,9 +1,9 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import styled from '@emotion/styled/macro';
-import Link from '../link';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Link from '../link';
 import api from '../../../api';
 
 const NavBar = styled.div`
@@ -33,13 +33,15 @@ const RightItems = styled.div`
 `;
 
 // show user in header
-const authenticateContent = userId => (
+const authenticateContent = user => (
   <NavBar>
     <LeftItems>
-      <Link to="/users">Users</Link>
+      <Link to="/jobs">Jobs</Link>
     </LeftItems>
     <RightItems>
-      <Link to={`/users/${userId}`}>User: {userId}</Link>
+      <Link to={`/users/${user.id}`}>
+        User: {user.name}
+      </Link>
       <Link to="/logout">Logout</Link>
     </RightItems>
   </NavBar>
@@ -55,9 +57,13 @@ const unauthenticatedContent = (
 );
 
 export default class Header extends PureComponent {
+  componentDidMount() {
+    const { currentUserId, currentUser, gotUser } = this.props;
+    if (currentUserId && !currentUser) return api.getUser(currentUserId).then(gotUser);
+  }
 
   render() {
-    const currentUserId = this.props.currentUserId;
+    const { currentUserId, currentUser } = this.props;
     return (
       <AppBar position="static">
         <Toolbar>
@@ -66,7 +72,7 @@ export default class Header extends PureComponent {
               NewCareers
             </Typography>
           </Link>
-          {currentUserId  && authenticateContent(currentUserId)}
+          {currentUser && authenticateContent(currentUser)}
           {!currentUserId && unauthenticatedContent}
         </Toolbar>
       </AppBar>
