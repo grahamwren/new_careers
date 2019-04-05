@@ -27,7 +27,7 @@ const RightItems = styled.div`
   align-items: inherit;
   margin-left: auto;
 
-  & > *:not(:first-child) {
+  & > * {
     margin-left: 1rem;
   }
 `;

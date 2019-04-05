@@ -1,6 +1,7 @@
 import mapValues from 'lodash/mapValues';
 import userMethods from './users';
 import jobMethods from './jobs';
+import appMethods from './apps';
 import applyAspects from './api-aspects';
 
 function Client() {
@@ -10,6 +11,7 @@ function Client() {
 Client.prototype = mapValues({
   ...userMethods,
   ...jobMethods,
+  ...appMethods,
   logout() {
     this.token = null;
     localStorage.removeItem('auth-token');

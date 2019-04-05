@@ -4,6 +4,7 @@ defmodule NewCareersApi.Apps do
   """
 
   import Ecto.Query, warn: false
+  alias Ecto.Multi
   alias NewCareersApi.Repo
 
   alias NewCareersApi.Users.User
@@ -82,10 +83,12 @@ defmodule NewCareersApi.Apps do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_app(%App{} = app, attrs) do
-    app
-    |> App.changeset(attrs)
-    |> Repo.update()
+  def update_app(%App{id: app_id, job_id: job_id} = app, attrs) do
+    if (attrs["status"] === "hired") do
+      from(a in App, where: a.job_id == ^job_id and a.id != ^app_id)
+      |> Repo.update_all(set: [status: 2])
+    end
+    app |> App.changeset(attrs) |> Repo.update
   end
 
   @doc """

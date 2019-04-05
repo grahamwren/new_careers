@@ -27,6 +27,13 @@ defmodule NewCareersApiWeb.AppController do
     end
   end
 
+  def index(conn, _params) do
+    apps =
+      Apps.list_apps()
+      |> Enum.filter(&authorize(conn, :show, &1))
+    render(conn, "index.json", apps: apps)
+  end
+
   def create(conn, %{"app" => app_params}) do
     with {:ok, %App{} = app} <- Apps.create_app(app_params) do
       conn
@@ -43,9 +50,10 @@ defmodule NewCareersApiWeb.AppController do
 
   def update(conn, %{"id" => id, "app" => app_params}) do
     app = Apps.get_app!(id)
-
-    with {:ok, %App{} = app} <- Apps.update_app(app, app_params) do
-      render(conn, "show.json", app: app)
+    with :ok <- authorize!(conn, :update, app, app_params) do
+      with {:ok, %App{} = app} <- Apps.update_app(app, app_params) do
+        render(conn, "show.json", app: app)
+      end
     end
   end
 

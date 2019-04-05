@@ -1,5 +1,6 @@
 import { handleActions } from 'redux-actions';
 import { loggedIn, loggedOut } from './actions';
+import api from './client';
 
 function getInitState() {
   const userId = localStorage.getItem('userId');
@@ -14,6 +15,7 @@ export default handleActions({
     return { ...state, userId: data.user_id };
   },
   [loggedOut]: (state) => {
+    api.logout();
     localStorage.removeItem('userId');
     return { ...state, userId: undefined };
   }
