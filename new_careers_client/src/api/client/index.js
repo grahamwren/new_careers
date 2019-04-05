@@ -1,5 +1,7 @@
-import mapValues from 'lodash/mapValues'
+import mapValues from 'lodash/mapValues';
 import userMethods from './users';
+import jobMethods from './jobs';
+import applyAspects from './api-aspects';
 
 function Client() {
   this.token = localStorage.getItem('auth-token');
@@ -7,6 +9,7 @@ function Client() {
 
 Client.prototype = mapValues({
   ...userMethods,
+  ...jobMethods,
   logout() {
     this.token = null;
     localStorage.removeItem('auth-token');
@@ -15,17 +18,6 @@ Client.prototype = mapValues({
     this.token = token;
     localStorage.setItem('auth-token', token);
   }
-}, (method, name) => {
-  return async function(...a) {
-    try {
-      return await method.apply(this, a);
-    } catch (e) {
-      if (e.status === 401 && name !== 'loginUser') {
-        window.location = '/logout';
-      }
-      throw e;
-    }
-  }
-});
+}, applyAspects);
 
 export default new Client();

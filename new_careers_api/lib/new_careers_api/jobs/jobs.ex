@@ -50,7 +50,7 @@ defmodule NewCareersApi.Jobs do
 
   defp sanitize_like_str(str) do
     if str do
-      # remove non word characters, allows: [a-zA-Z0-9_ .]
+      # remove non word characters, allows: [a-zA-Z0-9_ .-]
       str = Regex.replace(~r/[^\w \.\-]/, str, "", global: true)
       # escape "_" and "\" to "\_" or "\_" because is significant in like expr
       Regex.replace(~r/([_\\])/, str, "\\\\\\1", global: true)

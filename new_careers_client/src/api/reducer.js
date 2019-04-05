@@ -1,5 +1,5 @@
-import {handleActions} from 'redux-actions';
-import {loggedIn, loggedOut} from "./actions";
+import { handleActions } from 'redux-actions';
+import { loggedIn, loggedOut } from './actions';
 
 function getInitState() {
   const userId = localStorage.getItem('userId');
@@ -9,12 +9,12 @@ function getInitState() {
 }
 
 export default handleActions({
-  [loggedIn]: (state, {payload}) => {
-    localStorage.setItem('userId', payload.user_id);
-    return {...state, userId: payload.user_id};
+  [loggedIn]: (state, { payload: { data } }) => {
+    localStorage.setItem('userId', data.user_id);
+    return { ...state, userId: data.user_id };
   },
-  [loggedOut]: state => {
+  [loggedOut]: (state) => {
     localStorage.removeItem('userId');
-    return {...state, userId: undefined};
+    return { ...state, userId: undefined };
   }
 }, getInitState());
