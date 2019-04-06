@@ -6,29 +6,14 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 import api from '../../../api';
 
-const Header = styled.div`
+const Footer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;  
-`;
-
-const MiniHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-`;
-
-const CloseButton = styled.div`
-  cursor: pointer;
-  font-size: 0.5rem;
-  padding: 0.25rem;
-  border-radius: 0.25rem;
-  &:hover {
-    background: rgba(0,0,0,0.2);
-  }
+  align-items: flex-end;
+  margin-top: auto;
+  background: white; 
 `;
 
 const Form = styled.form`
@@ -53,20 +38,17 @@ const FieldAdapter = Component => props => (
 const AdaptedSelect = FieldAdapter(Select);
 
 const CreateChatForm = reduxForm({ form: 'startChat' })(
-  ({ availableUsers, handleSubmit }) => (
-    <Form handleSubmit={handleSubmit}>
+  ({ selectOptions: menuItems, handleSubmit }) => (
+    <Form onSubmit={handleSubmit}>
       <Field
-        label="Start New Chat"
-        name="roomName"
-        component={props => (
+        label="Go To Chat"
+        name="userId"
+        component={({ selectOptions, ...props }) => (
           <AdaptedSelect {...props}>
-            {availableUsers.map(u => (
-              <MenuItem key={u.value} value={u.value}>
-                {u.label}
-              </MenuItem>
-            ))}
+            {selectOptions}
           </AdaptedSelect>
         )}
+        selectOptions={menuItems}
         variant="outlined"
       />
       <Button type="submit">Go</Button>
@@ -76,33 +58,36 @@ const CreateChatForm = reduxForm({ form: 'startChat' })(
 
 export default class LobbyHeader extends PureComponent {
   componentDidMount() {
-    const { availableUsers, gotUsers } = this.props;
-    if (!availableUsers) {
-      api.getUsers().then(gotUsers);
-    }
+    const { gotUsers } = this.props;
+    api.getUsers().then(gotUsers);
   }
 
-  createChat({ roomName }) {
-    const { gotRoom } = this.props;
-    gotRoom({
-              id: roomName,
-              user: {
-                name: `Graham ${roomName}`,
-              }
-            });
+  createChat({ userId }) {
+    const { enterRoom } = this.props;
+    api.getChannel('room:lobby').then(channel =>
+      channel.push('get_chat', { user_id: userId }).receive('ok', chat =>
+        enterRoom(chat.id)));
   }
 
   render() {
-    const { toggleChat, availableUsers } = this.props;
+    const { availableUsers, currentUserId } = this.props;
+    const selectOptions = availableUsers
+      .filter(u => u.id !== Number(currentUserId))
+      .map(u => (
+        <MenuItem key={u.id} value={u.id}>
+          {u.name || u.email}
+        </MenuItem>
+      ));
     return (
-      <Header>
-        <MiniHeader>
-          <CloseButton onClick={() => toggleChat()}>DISMISS</CloseButton>
-        </MiniHeader>
+      <Footer>
         {availableUsers
-         && <CreateChatForm availableUsers={availableUsers} onSubmit={d => this.createChat(d)} />
-        }
-      </Header>
+         && (
+         <CreateChatForm
+           selectOptions={selectOptions}
+           onSubmit={data => this.createChat(data)}
+         />
+         )}
+      </Footer>
     );
   }
 }
