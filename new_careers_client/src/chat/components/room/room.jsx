@@ -26,6 +26,8 @@ const Message = styled.div`
   border: 1px rgba(0,0,0,0.2) solid;
   border-radius: 0.25rem;
   padding: 0.5rem;
+  max-height: calc(100% - 3rem);
+  max-width: calc(100% - 1.5rem);
   ${({ isMe }) => (isMe ? `
   background: rgba(0,0,255,0.5);
   color: white;

@@ -4,6 +4,7 @@ import styled from '@emotion/styled/macro';
 const Header = styled.div`
   display: flex;
   flex-direction: column;
+  height: 1rem;
   align-items: flex-start;  
 `;
 
