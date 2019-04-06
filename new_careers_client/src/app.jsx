@@ -8,6 +8,7 @@ import {Main} from './common/layouts'
 import Home from './common/components/home';
 import Logout from './common/components/logout';
 import Login from './login';
+import Register from './register/register';
 import api from './api';
 
 window.api = api;
@@ -43,6 +44,7 @@ export default () => (
           <Route exact path="/" component={Home}/>
           <Route exact path="/login" component={Login}/>
           <Route exact path="/logout" component={Logout}/>
+          <Route exact path="/register" component={Register}/>
         </Fragment>
       </Router>
     </MuiThemeProvider>
