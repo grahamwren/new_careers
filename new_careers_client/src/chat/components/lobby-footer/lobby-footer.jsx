@@ -56,7 +56,7 @@ const CreateChatForm = reduxForm({ form: 'startChat' })(
   )
 );
 
-export default class LobbyHeader extends PureComponent {
+export default class LobbyFooter extends PureComponent {
   componentDidMount() {
     const { gotUsers } = this.props;
     api.getUsers().then(gotUsers);

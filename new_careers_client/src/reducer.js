@@ -8,7 +8,11 @@ import { chatReducer } from './chat';
 export default combineReducers({
   api: apiReducer,
   jobSearch: jobSearchReducer,
-  form: formReducer,
   users: userReducer,
-  chat: chatReducer
+  chat: chatReducer,
+  form: formReducer.plugin({
+    sendMessage: (state, {type}) => {
+      if (type !== '@@redux-form/SET_SUBMIT_SUCCEEDED') return state;
+    }
+  })
 });

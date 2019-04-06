@@ -11,7 +11,7 @@ import {
 
 export default handleActions({
   [enterRoom]: (state, { payload }) => ({ ...state, roomName: payload }),
-  [exitRoom]: state => ({ ...state, roomName: undefined }),
+  [exitRoom]: state => ({ ...state, roomName: undefined, messages: undefined }),
   [gotMessages]: (state, { payload }) => ({ ...state, messages: payload }),
   [gotMessage]: (state, { payload }) =>
     ({ ...state, messages: [...(state.messages || []), payload] }),
