@@ -5,26 +5,26 @@ import RegisterForm from './register-form';
 import api from '../api';
 
 export default class Register extends PureComponent {
-  async registerUser({name, email, password, confirmPassword}) {
+  registerUser({name, email, password, confirmPassword}) {
+    const { history } = this.props;
     if (password !== confirmPassword) {
       throw new SubmissionError({
         email: 'Passwords do not match',
         _error: 'Register failed'
       })
     }
-    try {
-      const {data} = await api.createUser({email, password, name})
-      this.props.history.push('/');
-    } catch (error) {
-      if (error.status === 401) {
+    const cb = history.push('/');
+    api.createUser({email, password, name}).then(cb, (error) => {
+      if (error.status === 422) {
         throw new SubmissionError({
           email: 'Email already taken',
           _error: 'Register failed'
         });
       }
       throw error.statusText;
-    }
+    });
   }
+
   render() {
     return (
       <RegisterContainer>
