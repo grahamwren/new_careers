@@ -2,15 +2,24 @@ import React, { PureComponent } from 'react';
 import styled from '@emotion/styled/macro';
 import api from '../../../api';
 import LobbyHeader from '../lobby-header';
+import LobbyFooter from '../lobby-footer';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
+`;
+
+const Rooms = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: scroll;
 `;
 
 const Room = styled.div`
-  width: calc(100% - 1rem);
+  width: calc(100% - 1.5rem);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -22,7 +31,7 @@ const Room = styled.div`
     border-color: rgba(255,0,0,0.5);
   }
   &:not(:first-of-type) {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
   }
 `;
 
@@ -47,11 +56,14 @@ export default class Lobby extends PureComponent {
     return (
       <Container>
         <LobbyHeader />
-        {options.map(op => (
-          <Room key={op.id} onClick={() => enterRoom(op.id)}>
-            {op.user.name || op.user.email}
-          </Room>
-        ))}
+        <Rooms>
+          {options.map(op => (
+            <Room key={op.id} onClick={() => enterRoom(op.id)}>
+              {op.user.name || op.user.email}
+            </Room>
+          ))}
+        </Rooms>
+        <LobbyFooter/>
       </Container>
     );
   }
