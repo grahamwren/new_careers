@@ -41,7 +41,7 @@ const authenticateContent = user => (
     </LeftItems>
     <RightItems>
       <Link to={`/users/${user.id}`}>
-        User: {user.name}
+        User: {user.name || user.email}
       </Link>
       <Link to="/logout">Logout</Link>
     </RightItems>

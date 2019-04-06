@@ -2,11 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from '@emotion/styled/macro';
 import { reduxForm, Field } from 'redux-form';
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import api from '../../../api';
 
 const Footer = styled.div`
   display: flex;
@@ -19,6 +15,7 @@ const Footer = styled.div`
 const Form = styled.form`
   width: 100%;
   display: flex;
+  min-height: 2rem;
   & > div {
     flex-grow: 2;
   }
