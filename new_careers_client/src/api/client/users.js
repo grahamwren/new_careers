@@ -3,12 +3,6 @@ import { baseUrl } from '../../config';
 
 export default {
   createUser(user) {
-    user = {
-      email: user.email,
-      password: user.password,
-      first_name: user.first_name || user.firstName,
-      last_name: user.last_name || user.lastName
-    };
     return $.ajax(`${baseUrl}/users`, {
       method: 'POST',
       data: JSON.stringify({ user }),
@@ -56,8 +50,7 @@ export default {
     const user = {
       email: data.email,
       password: data.password,
-      first_name: data.first_name || data.firstName,
-      last_name: data.last_name || data.lastName
+      name: data.name
     };
     return $.ajax(`${baseUrl}/users/${id}`, {
       type: 'PUT',
