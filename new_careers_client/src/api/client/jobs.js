@@ -4,19 +4,20 @@ import { baseUrl } from '../../config';
 
 export default {
   createJob(job) {
-    job = {
+    const jobData = {
       title: job.title,
       description: job.description,
       company: job.company,
       location: job.location,
       salary: job.salary,
-      salary_type: job.salaryType,
-      contact_id: job.contactId
+      salary_type: job.salary_type || job.salaryType,
+      contact_id: job.contact_id || job.contactId
     };
     return $.ajax(`${baseUrl}/jobs`, {
       method: 'POST',
-      data: JSON.stringify({ job }),
+      data: JSON.stringify({ job: jobData }),
       beforeSend: (xhr) => {
+        xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
         xhr.setRequestHeader('Content-Type', 'application/json');
       }
     });
