@@ -84,6 +84,7 @@ defmodule NewCareersApi.Apps do
 
   """
   def update_app(%App{id: app_id, job_id: job_id} = app, attrs) do
+    # when someone gets hired for a position, reject everyone else
     if (attrs["status"] === "hired") do
       from(a in App, where: a.job_id == ^job_id and a.id != ^app_id)
       |> Repo.update_all(set: [status: 2])

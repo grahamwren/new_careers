@@ -7,8 +7,8 @@ import { LoginForm as Form } from './theme';
 
 const TextFieldAdapter = props => <TextField {...props} onChange={props.input.onChange} />;
 
-const LoginForm = props => (
-  <Form onSubmit={props.handleSubmit}>
+const LoginForm = ({ handleSubmit }) => (
+  <Form onSubmit={handleSubmit}>
     <FormLabel>Login</FormLabel>
     <Field
       label="Email"
