@@ -17,7 +17,7 @@ const Messages = styled.div`
   flex-direction: column;
   width: 100%;
   overflow-y: scroll;
-  padding-top: 0.5rem;
+  padding: 0.5rem 0;
 `;
 
 const Message = styled.div`
