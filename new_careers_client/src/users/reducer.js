@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions';
+import keyBy from 'lodash/keyBy';
 import { gotUser, gotUsers } from './actions';
 
 export default handleActions({
@@ -9,5 +10,6 @@ export default handleActions({
       [user.id]: user
     }
   }),
-  [gotUsers]: (state, { payload }) => Object.assign({}, state, payload)
+  [gotUsers]: (state, { payload }) =>
+    ({ ...state, data: keyBy(payload.data, 'id') })
 }, {});

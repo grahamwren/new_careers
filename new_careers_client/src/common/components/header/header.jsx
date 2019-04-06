@@ -10,6 +10,7 @@ const NavBar = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  height: 4rem;
 `;
 
 const LeftItems = styled.div`
@@ -40,7 +41,7 @@ const authenticateContent = user => (
     </LeftItems>
     <RightItems>
       <Link to={`/users/${user.id}`}>
-        User: {user.name}
+        User: {user.name || user.email}
       </Link>
       <Link to="/logout">Logout</Link>
     </RightItems>

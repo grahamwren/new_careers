@@ -15,6 +15,7 @@ module.exports = {
         }
     },
     'rules': {
+        'implicit-arrow-linebreak': 'off',
         'import/prefer-default-export': 'off',
         'comma-dangle': 'off',
         'no-console': 'off',

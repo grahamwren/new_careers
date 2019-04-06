@@ -13,6 +13,7 @@ alias NewCareersApi.Repo
 alias NewCareersApi.Users.User
 alias NewCareersApi.Jobs.Job
 alias NewCareersApi.Apps.App
+alias NewCareersApi.Chats.Message
 
 %{password_hash: password_hash} = Argon2.add_hash("password")
 
@@ -68,4 +69,16 @@ _app2 = Repo.insert!(%App{
 _app3 = Repo.insert!(%App{
   user_id: blake.id,
   job_id: job1.id
+})
+
+Repo.insert(%Message{
+  from_id: alex.id,
+  to_id: blake.id,
+  message: "Hello Blake!"
+})
+
+Repo.insert(%Message{
+  from_id: blake.id,
+  to_id: alex.id,
+  message: "Hello Alex!"
 })
