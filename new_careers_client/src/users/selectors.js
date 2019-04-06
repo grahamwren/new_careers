@@ -5,3 +5,4 @@ export const getUser = (state, { userId }) => get(state, `users.data.${userId}`)
 export const getCurrentUser = state => getUser(state, {
   userId: getCurrentUserId(state)
 });
+export const getUsers = state => get(state, 'users.data');

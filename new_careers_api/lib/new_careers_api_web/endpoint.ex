@@ -4,7 +4,7 @@ defmodule NewCareersApiWeb.Endpoint do
   # CORS stuff (only for localhost, prod uses nginx path routing)
   plug CORSPlug, [origin: "http://localhost:3000"]
 
-  socket "/socket", NewCareersApiWeb.UserSocket,
+  socket "/api/v1/socket", NewCareersApiWeb.UserSocket,
     websocket: true,
     longpoll: false
 
