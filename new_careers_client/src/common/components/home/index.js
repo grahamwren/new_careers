@@ -1,6 +1,6 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Home from './home';
-import {getCurrentUserId} from '../../../api';
+import { getCurrentUserId } from '../../../api';
 
 const mapStateToProps = state => ({
   currentUserId: getCurrentUserId(state)

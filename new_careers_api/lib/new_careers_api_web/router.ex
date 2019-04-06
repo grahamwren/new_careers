@@ -29,6 +29,6 @@ defmodule NewCareersApiWeb.Router do
       post "/apply", JobController, :apply, as: :apply
     end
 
-    resources "/apps", AppController, except: [:index, :new, :edit]
+    resources "/apps", AppController, except: [:new, :edit]
   end
 end

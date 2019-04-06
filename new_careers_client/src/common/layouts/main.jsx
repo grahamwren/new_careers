@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import styled from '@emotion/styled/macro';
 import Header from '../components/header';
 
@@ -11,9 +11,9 @@ const Container = styled.div`
   justify-content: flex-start;
 `;
 
-export default ({children}) => (
+export default ({ children }) => (
   <Fragment>
-    <Header/>
+    <Header />
     <Container>
       {children}
     </Container>
