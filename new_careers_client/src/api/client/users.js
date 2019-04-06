@@ -3,6 +3,11 @@ import { baseUrl } from '../../config';
 
 export default {
   createUser(user) {
+    user = {
+      email: user.email,
+      password: user.password,
+      name: user.name
+    };
     return $.ajax(`${baseUrl}/users`, {
       method: 'POST',
       data: JSON.stringify({ user }),
