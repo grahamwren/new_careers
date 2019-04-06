@@ -3,8 +3,9 @@ import styled from '@emotion/styled/macro';
 
 const Header = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;  
+  justify-content: space-between; 
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 `;
 
 const CloseButton = styled.div`
@@ -22,6 +23,7 @@ export default class LobbyHeader extends PureComponent {
     const { toggleChat } = this.props;
     return (
       <Header>
+        Your Conversations
         <CloseButton onClick={() => toggleChat()}>DISMISS</CloseButton>
       </Header>
     );

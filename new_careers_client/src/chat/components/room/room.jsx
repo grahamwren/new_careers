@@ -1,12 +1,23 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import styled from '@emotion/styled/macro';
 import api from '../../../api';
 import RoomHeader from '../room-header';
+import RoomFooter from '../room-footer';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
+`;
+
+
+const Messages = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: scroll;
+  padding-top: 0.5rem;
 `;
 
 const Message = styled.div`
@@ -40,16 +51,27 @@ const MessageTitle = styled.div`
   `)}
 `;
 
-export default class Room extends PureComponent {
+export default class Room extends Component {
   componentDidMount() {
-    this.getChat();
+    const { gotMessage } = this.props;
+    this.getChannel().then((channel) => {
+      this.getChat(channel);
+      channel.on('new_message', m => gotMessage(m) && this.scrollToBottom());
+    });
   }
 
-  getChat() {
-    const { roomName, gotMessages } = this.props;
-    api.getChannel(`room:${roomName}`).then((channel) => {
-      channel.push('get_chat').receive('ok', ({ messages }) => gotMessages(messages));
-    });
+  getChat(channel) {
+    const { gotMessages } = this.props;
+    channel.push('get_chat').receive('ok', ({ messages }) => gotMessages(messages));
+  }
+
+  getChannel() {
+    const { roomName } = this.props;
+    return api.getChannel(`room:${roomName}`);
+  }
+
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
   }
 
   render() {
@@ -63,14 +85,23 @@ export default class Room extends PureComponent {
     return (
       <Container>
         <RoomHeader />
-        {options.map(m => (
-          <Message key={m.id} isMe={m.userId === Number(currentUserId)}>
-            <MessageTitle isMe={m.userId === Number(currentUserId)}>
-              {m.userId === Number(currentUserId) ? 'You' : m.name}
-            </MessageTitle>
-            {m.content}
-          </Message>
-        ))}
+        <Messages>
+          {options.map(m => (
+            <Message key={m.id} isMe={m.userId === Number(currentUserId)}>
+              <MessageTitle isMe={m.userId === Number(currentUserId)}>
+                {m.userId === Number(currentUserId) ? 'You' : m.name}
+              </MessageTitle>
+              {m.content}
+            </Message>
+          ))}
+          {<div
+            id="messages-end"
+            ref={(el) => {
+              this.messagesEnd = el;
+            }}
+          />}
+        </Messages>
+        <RoomFooter getChannel={() => this.getChannel()} />
       </Container>
     );
   }

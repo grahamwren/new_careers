@@ -13,7 +13,7 @@ defmodule NewCareersApiWeb.RoomChannel do
     from_user = socket.assigns.from_user
     with {:ok, chat} <- verify_chat(chat_id, from_user.id) do
       to_user =
-        if(chat.first_user_id === from_user.id, do: chat.second_user_id, else: chat.first_user_id)
+        if(chat.first_user.id === from_user.id, do: chat.second_user.id, else: chat.first_user.id)
         |> Users.get_user!
       {:ok, socket |> assign(:to_user, to_user) |> assign(:chat, chat)}
     end
@@ -44,6 +44,7 @@ defmodule NewCareersApiWeb.RoomChannel do
         from_id: socket.assigns.from_user.id,
         to_id: socket.assigns.to_user.id
       }) do
+        m = Chats.add_users_to_message(m)
         broadcast socket, "new_message", m
         {:noreply, socket}
       else

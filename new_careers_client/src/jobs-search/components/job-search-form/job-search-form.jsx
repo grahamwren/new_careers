@@ -15,14 +15,14 @@ const Form = styled.form`
   }
 `;
 
-const FieldAdapter = Component => props => <Component {...props} onChange={props.input.onChange} />;
+const FieldAdapter = props => <TextField {...props} onChange={props.input.onChange} />;
 
 const SearchForm = props => (
   <Form onSubmit={props.handleSubmit}>
     <Field
       label="Query"
       name="query"
-      component={FieldAdapter(TextField)}
+      component={FieldAdapter}
       type="text"
       autoComplete="none"
       variant="outlined"
@@ -30,7 +30,7 @@ const SearchForm = props => (
     <Field
       label="Offset"
       name="start"
-      component={FieldAdapter(TextField)}
+      component={FieldAdapter}
       type="number"
       autoComplete="none"
       variant="outlined"
@@ -38,7 +38,7 @@ const SearchForm = props => (
     <Field
       label="Count"
       name="limit"
-      component={FieldAdapter(TextField)}
+      component={FieldAdapter}
       type="number"
       autoComplete="none"
       variant="outlined"
