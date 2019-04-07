@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from '@emotion/styled/macro';
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -28,28 +29,30 @@ export default class JobsList extends PureComponent {
   }
 
   render() {
-    const { jobs } = this.props;
+    const { jobs, history } = this.props;
     return (
       <Container>
         <JobSearchForm onSubmit={p => this.searchJobs(p)} />
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>Company</TableCell>
-              <TableCell>Location</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {jobs && jobs.map(job => (
-              <TableRow key={job.id}>
-                <TableCell>{job.title}</TableCell>
-                <TableCell>{job.company}</TableCell>
-                <TableCell>{job.location}</TableCell>
+        <Paper>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Title</TableCell>
+                <TableCell>Company</TableCell>
+                <TableCell>Location</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHead>
+            <TableBody>
+              {jobs && jobs.map(job => (
+                <TableRow key={job.id} hover onClick={ev => history.push('/jobs/' + job.id)}>
+                  <TableCell>{job.title}</TableCell>
+                  <TableCell>{job.company}</TableCell>
+                  <TableCell>{job.location}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
         {jobs && !jobs.length && 'No jobs found for this search'}
       </Container>
     );
