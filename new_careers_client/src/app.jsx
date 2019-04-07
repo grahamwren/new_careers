@@ -7,7 +7,7 @@ import { Main } from './common/layouts';
 import Home from './common/components/home';
 import Logout from './common/components/logout';
 import Login from './login';
-import Register from './register/register';
+import Register from './register';
 import JobsSearch from './jobs-search/components/jobs-list';
 import api from './api';
 
