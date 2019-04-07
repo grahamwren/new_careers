@@ -5,7 +5,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import keyBy from 'lodash/keyBy';
 import JobSearchForm from '../job-search-form';
+import JobActions from '../job-actions';
 import api from '../../../api';
 
 const Container = styled.div`
@@ -16,7 +18,8 @@ const Container = styled.div`
 
 export default class JobsList extends PureComponent {
   componentDidMount() {
-    const { jobs } = this.props;
+    const { jobs, currentUserId, gotApps } = this.props;
+    api.getAppsForUser(currentUserId).then(gotApps);
     if (!(jobs && jobs.length)) {
       this.searchJobs({});
     }
@@ -30,7 +33,11 @@ export default class JobsList extends PureComponent {
   }
 
   render() {
-    const { jobs } = this.props;
+    const {
+      jobs, apps, currentUserId, history
+    } = this.props;
+    const appsByJob = keyBy(apps, 'jobId');
+    const getHandleClick = job => () => history.push(`/jobs/${job.id}`);
     return (
       <Container>
         <JobSearchForm onSubmit={p => this.searchJobs(p)} />
@@ -40,21 +47,34 @@ export default class JobsList extends PureComponent {
               <TableCell>Title</TableCell>
               <TableCell>Company</TableCell>
               <TableCell>Location</TableCell>
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
             {jobs && jobs.map(job => (
               <TableRow key={job.id}>
-                <TableCell>{job.title}</TableCell>
-                <TableCell>{job.company}</TableCell>
-                {job.maps_url && (
+                <TableCell onClick={getHandleClick(job)}>{job.title}</TableCell>
+                <TableCell onClick={getHandleClick(job)}>{job.company}</TableCell>
+                {job.mapsUrl && (
                   <TableCell>
-                    <a target="_blank" rel="noopener noreferrer" href={job.maps_url}>
+                    <a target="_blank" rel="noopener noreferrer" href={job.mapsUrl}>
                       &#x2924; {job.location}
                     </a>
                   </TableCell>
                 )}
-                {!job.maps_url && <TableCell>{job.location}</TableCell>}
+                {!job.mapsUrl && (
+                  <TableCell onClick={getHandleClick(job)}>
+                    {job.location}
+                  </TableCell>
+                )}
+                <TableCell>
+                  <JobActions
+                    app={appsByJob[job.id]}
+                    job={job}
+                    isEdit={job.contactId === Number(currentUserId)}
+                    history={history}
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
