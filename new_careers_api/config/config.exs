@@ -8,7 +8,11 @@
 use Mix.Config
 
 config :new_careers_api,
-  ecto_repos: [NewCareersApi.Repo]
+  ecto_repos: [NewCareersApi.Repo],
+  google_maps_distance_api_url: "https://maps.googleapis.com/maps/api/distancematrix/json",
+  google_maps_places_search_api_url: "https://maps.googleapis.com/maps/api/place/findplacefromtext/json",
+  google_maps_places_detail_api_url: "https://maps.googleapis.com/maps/api/place/details/json",
+  google_maps_api_key: System.get_env("MAPS_API_KEY")
 
 # Configures the endpoint
 config :new_careers_api, NewCareersApiWeb.Endpoint,

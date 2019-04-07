@@ -16,15 +16,17 @@ const Container = styled.div`
 
 export default class JobsList extends PureComponent {
   componentDidMount() {
-    if (!(this.props.jobs && this.props.jobs.length)) {
-      api.searchJobs({}).then(this.props.gotJobSearchResults);
+    const { jobs } = this.props;
+    if (!(jobs && jobs.length)) {
+      this.searchJobs({});
     }
   }
 
   searchJobs(params) {
+    const { gotJobSearchResults } = this.props;
     return api
       .searchJobs(params)
-      .then(this.props.gotJobSearchResults);
+      .then(gotJobSearchResults);
   }
 
   render() {
@@ -45,7 +47,14 @@ export default class JobsList extends PureComponent {
               <TableRow key={job.id}>
                 <TableCell>{job.title}</TableCell>
                 <TableCell>{job.company}</TableCell>
-                <TableCell>{job.location}</TableCell>
+                {job.maps_url && (
+                  <TableCell>
+                    <a target="_blank" rel="noopener noreferrer" href={job.maps_url}>
+                      &#x2924; {job.location}
+                    </a>
+                  </TableCell>
+                )}
+                {!job.maps_url && <TableCell>{job.location}</TableCell>}
               </TableRow>
             ))}
           </TableBody>

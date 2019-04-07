@@ -44,7 +44,8 @@ defmodule NewCareersApi.MixProject do
       {:distillery, "~> 2.0"},
       {:argon2_elixir, "~> 2.0"},
       {:cors_plug, "~> 2.0"},
-      {:ecto_enum, "~> 1.2.0"}
+      {:ecto_enum, "~> 1.2.0"},
+      {:httpoison, "~> 1.4"}
     ]
   end
 

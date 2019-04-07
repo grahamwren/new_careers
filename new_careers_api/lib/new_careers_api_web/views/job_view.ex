@@ -16,6 +16,7 @@ defmodule NewCareersApiWeb.JobView do
       description: job.description,
       company: job.company,
       location: job.location,
+      maps_url: job.maps_url,
       salary: job.salary,
       salary_type: job.salary_type,
       contact_id: job.contact_id}
