@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Markdown from 'react-markdown';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -27,6 +27,7 @@ export default class User extends React.Component {
             <CardContent style={{ padding: 20 }}>
               <Typography variant="h4">{user.name}</Typography>
               <Typography gutterBottom variant="subtitle1" color="textSecondary">{user.email}</Typography>
+              <Markdown source={user.cover_letter} />
             </CardContent>
           </CardDetails>
         </Card>
