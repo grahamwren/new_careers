@@ -2,11 +2,12 @@ import $ from 'jquery';
 import { baseUrl } from '../../config';
 
 export default {
-  createUser(user) {
-    user = {
-      email: user.email,
-      password: user.password,
-      name: user.name
+  createUser(jsUser) {
+    const user = {
+      email: jsUser.email,
+      password: jsUser.password,
+      name: jsUser.name,
+      cover_letter: jsUser.coverLetter
     };
     return $.ajax(`${baseUrl}/users`, {
       method: 'POST',
@@ -55,7 +56,8 @@ export default {
     const user = {
       email: data.email,
       password: data.password,
-      name: data.name
+      name: data.name,
+      cover_letter: data.cover_letter || data.coverLetter
     };
     return $.ajax(`${baseUrl}/users/${id}`, {
       type: 'PUT',
