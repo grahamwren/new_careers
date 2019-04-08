@@ -18,11 +18,9 @@ const Container = styled.div`
 
 export default class JobsList extends PureComponent {
   componentDidMount() {
-    const { jobs, currentUserId, gotApps } = this.props;
+    const { currentUserId, gotApps } = this.props;
     api.getAppsForUser(currentUserId).then(gotApps);
-    if (!(jobs && jobs.length)) {
-      this.searchJobs({});
-    }
+    this.searchJobs({});
   }
 
   searchJobs(params) {
