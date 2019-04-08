@@ -23,7 +23,7 @@ export default function AppList({ apps, history }) {
             && apps.map(app => <AppRow key={app.id} app={app} history={history} />)}
         </TableBody>
       </Table>
-      {!apps.length && (
+      {apps && !apps.length && (
         <p>Apply to some jobs to see applications here.</p>
       )}
     </Fragment>
