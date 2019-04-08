@@ -5,8 +5,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
-import { CardContainer } from './theme';
-import api from '../../api';
+import { CardContainer } from '../theme';
+import api from '../../../api';
 
 export default class User extends React.Component {
   constructor(props) {
@@ -21,19 +21,22 @@ export default class User extends React.Component {
 
   render() {
     const { user } = this.state;
-    const { history } = this.props;
+    const { history, currentUserId } = this.props;
 
+    const allowEdit = user && user.id === Number(currentUserId);
     return (
       <CardContainer>
+        {allowEdit && (
+          <CardActions>
+            <Button size="small" onClick={() => history.push(`/users/${user.id}/edit`)}>Edit</Button>
+          </CardActions>
+        )}
         <Card>
           <CardContent style={{ padding: 20 }}>
             <Typography variant="h4">{user.name}</Typography>
             <Typography gutterBottom variant="subtitle1" color="textSecondary">{user.email}</Typography>
             <Markdown source={user.cover_letter} />
           </CardContent>
-          <CardActions>
-            <Button size="small" onClick={() => history.push('/users/' + user.id + '/edit')}>Edit</Button>
-          </CardActions>
         </Card>
       </CardContainer>
     );

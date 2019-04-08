@@ -6,7 +6,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import AppRow from './app-row';
 
-export default function AppList({ apps, history }) {
+export default function AppList({ apps, isEdit, history }) {
   return (
     <Fragment>
       <Table>
@@ -16,11 +16,13 @@ export default function AppList({ apps, history }) {
             <TableCell>Company</TableCell>
             <TableCell>Location</TableCell>
             <TableCell>Application Status</TableCell>
+            {isEdit && <TableCell />}
           </TableRow>
         </TableHead>
         <TableBody>
-          {Boolean(apps.length)
-            && apps.map(app => <AppRow key={app.id} app={app} history={history} />)}
+          {Boolean(apps.length) && apps.map(app => (
+            <AppRow key={app.id} app={app} history={history} isEdit={isEdit} />
+          ))}
         </TableBody>
       </Table>
       {apps && !apps.length && (

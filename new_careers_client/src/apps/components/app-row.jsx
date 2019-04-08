@@ -4,6 +4,7 @@ import cap from 'lodash/capitalize';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import api from '../../api/client';
+import AppActions from './app-actions';
 import { getJob, gotJob } from '../../jobs-search';
 
 class AppRow extends PureComponent {
@@ -13,16 +14,20 @@ class AppRow extends PureComponent {
   }
 
   render() {
-    const { job, app, history } = this.props;
+    const {
+      job, app, history, isEdit
+    } = this.props;
+    const goSomewhere = () =>
+      job && history.push(isEdit ? `/users/${app.userId}` : `/jobs/${job.id}`);
     return (
       <TableRow
-        onClick={() => job && history.push(`/jobs/${job.id}`)}
         style={{ cursor: 'pointer' }}
       >
-        <TableCell>{job && job.title}</TableCell>
-        <TableCell>{job && job.company}</TableCell>
-        <TableCell>{job && job.location}</TableCell>
-        <TableCell>{cap(app.status)}</TableCell>
+        <TableCell onClick={goSomewhere}>{job && job.title}</TableCell>
+        <TableCell onClick={goSomewhere}>{job && job.company}</TableCell>
+        <TableCell onClick={goSomewhere}>{job && job.location}</TableCell>
+        <TableCell onClick={goSomewhere}>{cap(app.status)}</TableCell>
+        {isEdit && <TableCell><AppActions app={app} /></TableCell>}
       </TableRow>
     );
   }

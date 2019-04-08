@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { SubmissionError } from 'redux-form';
 import { EditContainer } from './theme';
 import UserEditForm from './user-edit-form';
 import api from '../../api';

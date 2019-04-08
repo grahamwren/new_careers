@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions';
+import keyBy from 'lodash/keyBy';
 import { gotApp, gotApps } from './actions';
 
 const translateAppToJS = app => ({
@@ -9,13 +10,14 @@ const translateAppToJS = app => ({
 });
 
 export default handleActions({
-  [gotApp]: (state, { payload: { data: app } }) => ({
-    ...state,
-    data: [
-      ...state.data,
-      translateAppToJS(app)
-    ]
-  }),
+  [gotApp]: (state, { payload: { data: app } }) => {
+    const apps = keyBy(state.data, 'id');
+    apps[app.id] = translateAppToJS(app);
+    return {
+      ...state,
+      data: Object.values(apps)
+    };
+  },
   [gotApps]: (state, { payload }) => ({
     ...state,
     data: payload.data && payload.data.map(translateAppToJS)
