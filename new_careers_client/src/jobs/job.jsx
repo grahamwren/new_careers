@@ -3,11 +3,7 @@ import api from '../api';
 import {CardContainer, CardDetails} from './theme';
 
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
 export default class Job extends React.Component {
@@ -28,8 +24,12 @@ export default class Job extends React.Component {
       <CardContainer>
         <Card>
           <CardDetails>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">{job.title}</Typography>
+            <CardContent style={{padding: 20}}>
+              <Typography gutterBottom variant="subtitle1" color="textSecondary">{job.company}</Typography>
+              <Typography variant="h4">{job.title}</Typography>
+              <Typography gutterBottom variant="subtitle1" color="textSecondary">{job.location}</Typography>
+              <Typography gutterBottom variant="subtitle2">{job.salary_type}: {job.salary}</Typography>
+              <Typography variant="body1">{job.description}</Typography>
             </CardContent>
           </CardDetails>
         </Card>
