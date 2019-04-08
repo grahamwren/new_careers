@@ -40,6 +40,7 @@ export default class JobsList extends PureComponent {
     return (
       <Container>
         <JobSearchForm onSubmit={p => this.searchJobs(p)} />
+        <Paper>
         <Table>
           <TableHead>
             <TableRow>
@@ -72,20 +73,12 @@ export default class JobsList extends PureComponent {
                     job={job}
                     isEdit={job.contactId === Number(currentUserId)}
                     history={history}
-                  />
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {jobs && jobs.map(job => (
-                <TableRow key={job.id} hover onClick={ev => history.push('/jobs/' + job.id)}>
-                  <TableCell>{job.title}</TableCell>
-                  <TableCell>{job.company}</TableCell>
-                  <TableCell>{job.location}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                />
+              </TableCell>
+            </TableRow>
+            ))}
+          </TableBody>
+        </Table>
         </Paper>
         {jobs && !jobs.length && 'No jobs found for this search'}
       </Container>
