@@ -38,6 +38,7 @@ const authenticateContent = user => (
   <NavBar>
     <LeftItems>
       <Link to="/jobs">Jobs</Link>
+      <Link to="/job">Post Job</Link>
     </LeftItems>
     <RightItems>
       <Link to={`/users/${user.id}`}>

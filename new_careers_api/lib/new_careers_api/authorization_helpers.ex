@@ -14,7 +14,7 @@ defmodule NewCareersApi.AuthorizationHelpers do
   # Jobs ============================================================
   defp authorize_helper(_conn, :show, %Job{} = _job, _params), do: true
   defp authorize_helper(conn, :create, %Job{} = _job, params),
-       do: match_user_id(conn, params["contact_id"])
+       do: match_user_id(conn, IO.inspect(params["contact_id"]))
   defp authorize_helper(conn, :update, %Job{} = job, params),
        do: match_user_id(conn, job.contact_id) &&
            (!params["contact_id"] ||
@@ -52,11 +52,16 @@ defmodule NewCareersApi.AuthorizationHelpers do
 
   defp match_user_id(conn, %User{id: user_id}),
        do: match_user_id(conn, user_id)
-  defp match_user_id(conn, user_id),
-       do: conn &&
-         conn.assigns &&
-         conn.assigns.user &&
-         conn.assigns.user.id === user_id
+  defp match_user_id(conn, user_id) when is_integer(user_id) do
+    conn &&
+      conn.assigns &&
+      conn.assigns.user &&
+      conn.assigns.user.id === user_id
+  end
+  defp match_user_id(conn, user_id) do
+    {user_id, _} = Integer.parse(user_id)
+    match_user_id(conn, user_id)
+  end
 end
 
 # method(Object o) {

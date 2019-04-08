@@ -14,9 +14,9 @@ const TextFieldAdapter = ({ input, ...props }) => (
   />
 );
 
-const JobEditForm = ({ handleSubmit }) => (
+const JobEditForm = ({ handleSubmit, formTitle, submitTitle }) => (
   <Form onSubmit={handleSubmit}>
-    <FormLabel>Edit Job</FormLabel>
+    <FormLabel>{formTitle || 'Edit Job'}</FormLabel>
     <Field
       label="Title"
       name="title"
@@ -59,7 +59,7 @@ const JobEditForm = ({ handleSubmit }) => (
       type="text"
       variant="outlined"
     />
-    <Button type="submit">Submit Changes</Button>
+    <Button type="submit">{submitTitle || 'Submit Changes'}</Button>
   </Form>
 );
 

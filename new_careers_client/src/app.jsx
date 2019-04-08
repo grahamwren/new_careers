@@ -14,6 +14,7 @@ import JobEdit from './jobs/job-edit';
 import api from './api';
 import User from './users/components/user';
 import UserEdit from './users/components/user-edit';
+import NewJob from './jobs/new-job';
 
 window.api = api;
 
@@ -50,6 +51,7 @@ export default () => (
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/register" component={Register} />
           <Route path="/jobs" exact component={JobsSearch} />
+          <Route path="/job" exact component={NewJob} />
           <Route path="/jobs/:jobId" exact component={Job} />
           <Route path="/jobs/:jobId/edit" exact component={JobEdit} />
           <Route path="/users/:userId" exact component={User} />
