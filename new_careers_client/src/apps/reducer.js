@@ -2,6 +2,7 @@ import { handleActions } from 'redux-actions';
 import { gotApp, gotApps } from './actions';
 
 const translateAppToJS = app => ({
+  id: app.id,
   status: app.status,
   userId: app.user_id,
   jobId: app.job_id
