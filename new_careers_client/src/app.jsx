@@ -11,6 +11,7 @@ import Register from './register';
 import JobsSearch from './jobs-search/components/jobs-list';
 import Job from './jobs/job';
 import api from './api';
+import User from './users/components/user';
 
 window.api = api;
 
@@ -45,9 +46,10 @@ export default () => (
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/logout" component={Logout} />
-          <Route exact path="/register" component={Register}/>
+          <Route exact path="/register" component={Register} />
           <Route path="/jobs" exact component={JobsSearch} />
-          <Route path="/jobs/:jobId" component={Job}/>
+          <Route path="/jobs/:jobId" component={Job} />
+          <Route path="/users/:userId" component={User} />
         </Fragment>
       </Router>
     </MuiThemeProvider>

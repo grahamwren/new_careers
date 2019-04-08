@@ -2,8 +2,8 @@ import styled from '@emotion/styled/macro';
 
 export const CardContainer = styled.div`
   width: calc(100% - 2rem);
-  @media(min-width: 30rem) {
-    width: 28rem;
+  @media(min-width: 50rem) {
+    width: 48rem;
   }
   margin-top: 5rem;
 `;
