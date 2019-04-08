@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import styled from '@emotion/styled/macro';
 import { connect } from 'react-redux';
 import cap from 'lodash/capitalize';
 import TableRow from '@material-ui/core/TableRow';

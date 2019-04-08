@@ -28,7 +28,7 @@ defmodule NewCareersApi.Jobs do
     {start_n, _} = if start_n && start_n !== "", do: Integer.parse(start_n), else: {0, nil}
     start_n = if start_n < 0, do: 0, else: start_n
 
-    {limit, _} = if limit && limit !== "", do: Integer.parse(limit), else: {50, nil}
+    {limit, _} = if limit && limit !== "", do: Integer.parse(limit), else: {100, nil}
     limit = if limit > 100 || limit < 0, do: 100, else: limit
 
     order_dir = if Enum.member?(["asc", "desc"], order_dir),
