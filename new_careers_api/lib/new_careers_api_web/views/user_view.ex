@@ -13,6 +13,7 @@ defmodule NewCareersApiWeb.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id,
       name: user.name,
-      email: user.email}
+      email: user.email,
+      cover_letter: user.cover_letter}
   end
 end

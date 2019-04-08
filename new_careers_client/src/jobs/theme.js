@@ -9,8 +9,8 @@ export const CardContainer = styled.div`
 `;
 
 export const CardDetails = styled.div`
-  display: 'flex',
-  flexDirection: 'column'
+  display: flex;
+  flex-direction: column;
 `;
 
 export const EditContainer = styled.div`

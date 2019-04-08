@@ -6,6 +6,7 @@ defmodule NewCareersApi.Users.User do
   schema "users" do
     field :email, :string
     field :name, :string
+    field :cover_letter, :string
     field :password, :string, virtual: true
     field :password_hash, :string
 
@@ -18,7 +19,7 @@ defmodule NewCareersApi.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :password])
+    |> cast(attrs, [:name, :email, :cover_letter, :password])
     |> put_pass_hash
     |> unique_constraint(:email)
     |> validate_required([:email, :password_hash])
