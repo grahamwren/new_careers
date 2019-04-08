@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import { gotJobSearchResults, jobDeleted } from './actions';
+import { gotJobSearchResults, jobDeleted, gotJob } from './actions';
 
 const translateJobToJS = job => ({
   ...job,
@@ -17,5 +17,12 @@ export default handleActions({
   [jobDeleted]: (state, { payload: { id } }) => ({
     ...state,
     data: state.data && state.data.filter(job => job.id !== id)
+  }),
+  [gotJob]: (state, { payload: { data } }) => ({
+    ...state,
+    data: [
+      ...(state.data || []),
+      data
+    ]
   })
 }, {});

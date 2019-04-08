@@ -44,8 +44,8 @@ export default () => (
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/logout" component={Logout} />
-          <Route exact path="/register" component={Register}/>
-          <Route path="/jobs" component={JobsSearch} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/jobs" component={JobsSearch} />
         </Fragment>
       </Router>
     </MuiThemeProvider>
