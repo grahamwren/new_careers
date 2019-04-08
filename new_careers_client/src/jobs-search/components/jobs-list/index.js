@@ -2,9 +2,16 @@ import { connect } from 'react-redux';
 import JobsList from './jobs-list';
 import { gotJobSearchResults } from '../../actions';
 import { getJobSearchData } from '../../selectors';
+import { getCurrentUserId } from '../../../api';
+import { getAppsForUserId, gotApps } from '../../../apps';
 
-const mapStateToProps = state => ({
-  jobs: getJobSearchData(state)
-});
+function mapStateToProps(state) {
+  const currentUserId = getCurrentUserId(state);
+  return {
+    jobs: getJobSearchData(state),
+    apps: getAppsForUserId(state, { userId: currentUserId }),
+    currentUserId
+  };
+}
 
-export default connect(mapStateToProps, { gotJobSearchResults })(JobsList);
+export default connect(mapStateToProps, { gotJobSearchResults, gotApps })(JobsList);

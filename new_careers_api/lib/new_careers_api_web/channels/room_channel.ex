@@ -1,9 +1,7 @@
 defmodule NewCareersApiWeb.RoomChannel do
   use NewCareersApiWeb, :channel
   alias NewCareersApi.Users
-  alias NewCareersApi.Users.User
   alias NewCareersApi.Chats
-  alias NewCareersApi.Chats.Message
 
   def join("room:lobby", _payload, socket) do
     {:ok, socket}
@@ -51,7 +49,7 @@ defmodule NewCareersApiWeb.RoomChannel do
         _ -> {:reply, {:error, "message failed"}, socket}
       end
     else
-      {:reply. {:error, "cannot send in lobby"}, socket}
+      {:reply, {:error, "cannot send in lobby"}, socket}
     end
   end
 

@@ -4,7 +4,6 @@ defmodule NewCareersApi.Apps do
   """
 
   import Ecto.Query, warn: false
-  alias Ecto.Multi
   alias NewCareersApi.Repo
 
   alias NewCareersApi.Users.User

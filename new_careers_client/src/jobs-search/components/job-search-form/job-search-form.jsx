@@ -10,36 +10,21 @@ const Form = styled.form`
   margin: 1rem 0;
   align-items: center;
   
-  & > * {
+  & > *:not(:last-child){
     margin-right: 1rem;
+    flex-grow: 1;
   }
 `;
 
 const FieldAdapter = props => <TextField {...props} onChange={props.input.onChange} />;
 
-const SearchForm = props => (
-  <Form onSubmit={props.handleSubmit}>
+const SearchForm = ({ handleSubmit }) => (
+  <Form onSubmit={handleSubmit}>
     <Field
       label="Query"
       name="query"
       component={FieldAdapter}
       type="text"
-      autoComplete="none"
-      variant="outlined"
-    />
-    <Field
-      label="Offset"
-      name="start"
-      component={FieldAdapter}
-      type="number"
-      autoComplete="none"
-      variant="outlined"
-    />
-    <Field
-      label="Count"
-      name="limit"
-      component={FieldAdapter}
-      type="number"
       autoComplete="none"
       variant="outlined"
     />

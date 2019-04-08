@@ -1,6 +1,28 @@
 import { handleActions } from 'redux-actions';
-import { gotJobSearchResults } from './actions';
+import { gotJobSearchResults, jobDeleted, gotJob } from './actions';
+
+const translateJobToJS = job => ({
+  ...job,
+  maps_url: undefined,
+  contact_id: undefined,
+  mapsUrl: job.maps_url,
+  contactId: job.contact_id
+});
 
 export default handleActions({
-  [gotJobSearchResults]: (state, { payload }) => Object.assign({}, state, payload)
+  [gotJobSearchResults]: (state, { payload }) => ({
+    ...state,
+    data: payload.data && payload.data.map(translateJobToJS)
+  }),
+  [jobDeleted]: (state, { payload: { id } }) => ({
+    ...state,
+    data: state.data && state.data.filter(job => job.id !== id)
+  }),
+  [gotJob]: (state, { payload: { data } }) => ({
+    ...state,
+    data: [
+      ...(state.data || []),
+      data
+    ]
+  })
 }, {});
