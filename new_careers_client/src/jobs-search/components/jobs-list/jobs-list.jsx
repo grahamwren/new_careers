@@ -50,7 +50,7 @@ export default class JobsList extends PureComponent {
           </TableHead>
           <TableBody>
             {jobs && jobs.map(job => (
-              <TableRow key={job.id}>
+              <TableRow key={job.id} style={{ cursor: 'pointer' }}>
                 <TableCell onClick={getHandleClick(job)}>{job.title}</TableCell>
                 <TableCell onClick={getHandleClick(job)}>{job.company}</TableCell>
                 {job.mapsUrl && (
