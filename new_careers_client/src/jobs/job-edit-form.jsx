@@ -1,14 +1,20 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { EditForm as Form } from './theme';
 
 import TextField from '@material-ui/core/TextField';
 import FormLabel from '@material-ui/core/FormLabel';
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
+import { EditForm as Form } from './theme';
 
-const TextFieldAdapter = props => <TextField {...props} onChange={props.input.onChange} />;
+const TextFieldAdapter = ({ input, ...props }) => (
+  <TextField
+    {...props}
+    value={input.value}
+    onChange={input.onChange}
+  />
+);
 
-const JobEditForm = ({ handleSubmit, job }) => (
+const JobEditForm = ({ handleSubmit }) => (
   <Form onSubmit={handleSubmit}>
     <FormLabel>Edit Job</FormLabel>
     <Field
@@ -17,7 +23,6 @@ const JobEditForm = ({ handleSubmit, job }) => (
       component={TextFieldAdapter}
       type="text"
       variant="outlined"
-      defaultValue={job.title}
     />
     <Field
       label="Company"
@@ -25,7 +30,6 @@ const JobEditForm = ({ handleSubmit, job }) => (
       component={TextFieldAdapter}
       type="text"
       variant="outlined"
-      defaultValue={job.company}
     />
     <Field
       label="Salary"
@@ -33,7 +37,6 @@ const JobEditForm = ({ handleSubmit, job }) => (
       component={TextFieldAdapter}
       type="number"
       variant="outlined"
-      defaultValue={job.salary}
     />
     <Field
       label="Description"
@@ -41,10 +44,9 @@ const JobEditForm = ({ handleSubmit, job }) => (
       component={TextFieldAdapter}
       type="text"
       variant="outlined"
-      defaultValue={job.description}
     />
     <Button type="submit">Submit Changes</Button>
   </Form>
 );
 
-export default reduxForm({ form: 'job' })(JobEditForm);
+export default reduxForm({ form: 'job', enableReinitialize: true })(JobEditForm);

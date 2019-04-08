@@ -8,7 +8,7 @@ export default function JobActions({
   if (isEdit) {
     return (
       <Fragment>
-        <Button onClick={() => history.push(`/jobs/${job.id}`)}>Edit</Button>
+        <Button onClick={() => history.push(`/jobs/${job.id}/edit`)}>Edit</Button>
         <Button onClick={() => api.deleteJob(job.id).then(() => jobDeleted(job))}>Delete</Button>
       </Fragment>
     );

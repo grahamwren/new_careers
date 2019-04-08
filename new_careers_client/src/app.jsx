@@ -50,7 +50,7 @@ export default () => (
           <Route exact path="/register" component={Register} />
           <Route path="/jobs" exact component={JobsSearch} />
           <Route path="/jobs/:jobId" exact component={Job} />
-          <Route path="/jobs/:jobId/edit" exact component={JobEdit}/>
+          <Route path="/jobs/:jobId/edit" exact component={JobEdit} />
           <Route path="/users/:userId" component={User} />
         </Fragment>
       </Router>

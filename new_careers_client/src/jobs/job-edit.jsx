@@ -8,36 +8,39 @@ export default class JobEdit extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = { job: {} }
+    this.state = { job: {} };
   }
 
   componentDidMount() {
-    const jobId = this.props.match.params.jobId;
+    const { jobId } = this.props.match.params;
     api.getJob(jobId).then(res => this.setState({ job: res.data }));
   }
 
-  editJob({ id, company, title, location, salary_type, salary, description }) {
+  editJob({
+    id, company, title, location, salary_type, salary, description
+  }) {
     const { history } = this.props;
-    const cb = d => history.push('/jobs/' + id);
+    const cb = () => history.push(`/jobs/${id}`);
     const job = {
-      company: company,
-      title: title,
-      location: location,
-      salary_type: salary_type,
-      salary: salary,
-      description: description
-    }
+      company,
+      title,
+      location,
+      salary_type,
+      salary,
+      description
+    };
     api.updateJob(id, job).then(cb, (error) => {
       console.log(error);
-    })
+    });
   }
-  render () {
+
+  render() {
     const { job } = this.state;
 
     return (
       <EditContainer>
-        <JobEditForm onSubmit={data => this.editJob(data)} job={job}/>
+        <JobEditForm onSubmit={data => this.editJob(data)} initialValues={job} />
       </EditContainer>
-    )
+    );
   }
 }
