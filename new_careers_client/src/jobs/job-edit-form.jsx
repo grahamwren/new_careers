@@ -32,10 +32,24 @@ const JobEditForm = ({ handleSubmit }) => (
       variant="outlined"
     />
     <Field
+      label="Location"
+      name="location"
+      component={TextFieldAdapter}
+      type="text"
+      variant="outlined"
+    />
+    <Field
       label="Salary"
       name="salary"
       component={TextFieldAdapter}
       type="number"
+      variant="outlined"
+    />
+    <Field
+      label="Salary Type"
+      name="salary_type"
+      component={TextFieldAdapter}
+      type="text"
       variant="outlined"
     />
     <Field
