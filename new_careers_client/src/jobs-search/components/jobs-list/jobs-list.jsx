@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from '@emotion/styled/macro';
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -39,6 +40,7 @@ export default class JobsList extends PureComponent {
     return (
       <Container>
         <JobSearchForm onSubmit={p => this.searchJobs(p)} />
+        <Paper>
         <Table>
           <TableHead>
             <TableRow>
@@ -71,12 +73,13 @@ export default class JobsList extends PureComponent {
                     job={job}
                     isEdit={job.contactId === Number(currentUserId)}
                     history={history}
-                  />
-                </TableCell>
-              </TableRow>
+                />
+              </TableCell>
+            </TableRow>
             ))}
           </TableBody>
         </Table>
+        </Paper>
         {jobs && !jobs.length && 'No jobs found for this search'}
       </Container>
     );
