@@ -41,44 +41,44 @@ export default class JobsList extends PureComponent {
       <Container>
         <JobSearchForm onSubmit={p => this.searchJobs(p)} />
         <Paper>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>Company</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {jobs && jobs.map(job => (
-              <TableRow key={job.id} style={{ cursor: 'pointer' }}>
-                <TableCell onClick={getHandleClick(job)}>{job.title}</TableCell>
-                <TableCell onClick={getHandleClick(job)}>{job.company}</TableCell>
-                {job.mapsUrl && (
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Title</TableCell>
+                <TableCell>Company</TableCell>
+                <TableCell>Location</TableCell>
+                <TableCell />
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {jobs && jobs.map(job => (
+                <TableRow key={job.id} style={{ cursor: 'pointer' }}>
+                  <TableCell onClick={getHandleClick(job)}>{job.title}</TableCell>
+                  <TableCell onClick={getHandleClick(job)}>{job.company}</TableCell>
+                  {job.mapsUrl && (
                   <TableCell>
                     <a target="_blank" rel="noopener noreferrer" href={job.mapsUrl}>
                       &#x2924; {job.location}
                     </a>
                   </TableCell>
-                )}
-                {!job.mapsUrl && (
+                  )}
+                  {!job.mapsUrl && (
                   <TableCell onClick={getHandleClick(job)}>
                     {job.location}
                   </TableCell>
-                )}
-                <TableCell>
-                  <JobActions
-                    app={appsByJob[job.id]}
-                    job={job}
-                    isEdit={job.contactId === Number(currentUserId)}
-                    history={history}
-                />
-              </TableCell>
-            </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+                  )}
+                  <TableCell>
+                    <JobActions
+                      app={appsByJob[job.id]}
+                      job={job}
+                      isEdit={job.contactId === Number(currentUserId)}
+                      history={history}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </Paper>
         {jobs && !jobs.length && 'No jobs found for this search'}
       </Container>

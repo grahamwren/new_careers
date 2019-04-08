@@ -10,6 +10,7 @@ import Login from './login';
 import Register from './register';
 import JobsSearch from './jobs-search/components/jobs-list';
 import Job from './jobs/job';
+import JobEdit from './jobs/job-edit';
 import api from './api';
 import User from './users/components/user';
 
@@ -48,7 +49,8 @@ export default () => (
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/register" component={Register} />
           <Route path="/jobs" exact component={JobsSearch} />
-          <Route path="/jobs/:jobId" component={Job} />
+          <Route path="/jobs/:jobId" exact component={Job} />
+          <Route path="/jobs/:jobId/edit" exact component={JobEdit} />
           <Route path="/users/:userId" component={User} />
         </Fragment>
       </Router>
