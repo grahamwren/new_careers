@@ -81,7 +81,12 @@ Phoenix channels and push updates are used for real-time chat.
 Updates are pushed to users when the other user sends a message.
 
 ### Interesting Stuff outside Requirements
-TODO...
+In order to let our users filter for jobs, we had to implement a search
+bar for our users to search for jobs they want. Search strings 
+from the user needed to be sanitized. Then we ensured that only 
+100 records could be fetched at once to prevent a user scanning 
+the entire table. This then required that we support custom limits 
+and offset in our search API.
 
 ### Complex Aspects
 The most complex part of our app was real-time chat. In order to
@@ -92,12 +97,6 @@ means that in order to provide a virtual chat "object" to the user,
 we aggregate these messages and then extract meta-data, especially an
 encoded ID from them. This is then used to create "room"(s) which
 represent one of these chat objects.
-
-Search was also complex to implement. Search strings from the user needed
-to be sanitized. Then we ensured that only 100 records could be
-fetched at once to prevent a user scanning the entire table. This
-then required that we support custom limits and offset in our search
-API.
 
 ### Most Significant Challenge
 This most significant challenge was designing a UI which implemented
