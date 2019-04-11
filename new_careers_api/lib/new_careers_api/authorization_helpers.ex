@@ -1,8 +1,11 @@
 defmodule NewCareersApi.AuthorizationHelpers do
   alias NewCareersApi.Repo
+  alias NewCareersApi.Jobs
+  alias NewCareersApi.Apps
   alias NewCareersApi.Jobs.Job
   alias NewCareersApi.Users.User
   alias NewCareersApi.Apps.App
+  alias NewCareersApi.Files.File
 
   def authorize(conn, action, resource, params \\ %{}),
       do: authorize_helper(conn, action, resource, params)
@@ -45,6 +48,19 @@ defmodule NewCareersApi.AuthorizationHelpers do
   end
   #   delete - allowed for user who posted app
   defp authorize_helper(conn, :delete, %App{user_id: user_id}, _params),
+       do: match_user_id(conn, user_id)
+
+  # Files ===========================================================
+  defp authorize_helper(conn, :show, %File{user_id: user_id}, _params) do
+    Apps.list_apps_for_user(user_id)
+    |> Ecto.assoc(:job)
+    |> Repo.all
+    |> Enum.reduce(false, fn j, acc -> acc || match_user_id(conn, j.contact_id) end)
+  end
+  defp authorize_helper(conn, :update, %File{}, %{"user_id" => _u}), do: false
+  defp authorize_helper(conn, :create, %File{}, %{"user_id" => user_id}),
+       do: match_user_id(conn, user_id)
+  defp authorize_helper(conn, _action, %File{user_id: user_id}, _params),
        do: match_user_id(conn, user_id)
 
   # Default to block

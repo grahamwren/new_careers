@@ -5,7 +5,8 @@ module.exports = {
     'globals': {
         'window': true,
         'document': true,
-        'localStorage': true
+        'localStorage': true,
+        'fetch': true
     },
     'settings': {
         'import/resolver': {

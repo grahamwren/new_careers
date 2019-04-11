@@ -3,6 +3,7 @@ import { Socket } from 'phoenix';
 import userMethods from './users';
 import jobMethods from './jobs';
 import appMethods from './apps';
+import fileMethods from './files';
 import applyAspects from './api-aspects';
 import { baseUrl } from '../../config';
 
@@ -14,6 +15,7 @@ Client.prototype = mapValues({
   ...userMethods,
   ...jobMethods,
   ...appMethods,
+  ...fileMethods,
   logout() {
     this.token = null;
     localStorage.removeItem('auth-token');

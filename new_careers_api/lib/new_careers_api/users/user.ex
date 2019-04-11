@@ -12,6 +12,7 @@ defmodule NewCareersApi.Users.User do
 
     has_many :jobs, NewCareersApi.Jobs.Job, foreign_key: :contact_id
     has_many :apps, NewCareersApi.Apps.App
+    has_many :files, NewCareersApi.Files.File
 
     timestamps()
   end

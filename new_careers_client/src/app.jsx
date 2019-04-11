@@ -15,6 +15,7 @@ import api from './api';
 import User from './users/components/user';
 import UserEdit from './users/components/user-edit';
 import NewJob from './jobs/new-job';
+import FileUpload from './file-upload/components/file-upload';
 
 window.api = api;
 
@@ -56,6 +57,7 @@ export default () => (
           <Route path="/jobs/:jobId/edit" exact component={JobEdit} />
           <Route path="/users/:userId" exact component={User} />
           <Route path="/users/:userId/edit" exact component={UserEdit} />
+          <Route path="/upload-files" exact component={FileUpload} />
         </Fragment>
       </Router>
     </MuiThemeProvider>

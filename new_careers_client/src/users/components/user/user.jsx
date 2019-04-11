@@ -29,6 +29,7 @@ export default class User extends React.Component {
         {allowEdit && (
           <CardActions>
             <Button size="small" onClick={() => history.push(`/users/${user.id}/edit`)}>Edit</Button>
+            <Button size="small" onClick={() => history.push('/upload-files')}>Upload Files</Button>
           </CardActions>
         )}
         <Card>

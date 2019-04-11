@@ -82,3 +82,7 @@ Repo.insert(%Message{
   to_id: alex.id,
   message: "Hello Alex!"
 })
+
+Repo.insert(%File{
+
+})

@@ -23,6 +23,8 @@ defmodule NewCareersApiWeb.Router do
       get "/apps", AppController, :index
     end
 
+    resources "/files", FileController, except: [:new, :edit]
+
     get "/jobs/search", JobController, :search, as: :job_search
     resources "/jobs", JobController, except: [:new, :edit] do
       get "/apps", AppController, :index

@@ -45,7 +45,9 @@ defmodule NewCareersApi.MixProject do
       {:argon2_elixir, "~> 2.0"},
       {:cors_plug, "~> 2.0"},
       {:ecto_enum, "~> 1.2.0"},
-      {:httpoison, "~> 1.4"}
+      {:httpoison, "~> 1.4"},
+      {:arc_ecto, "~> 0.11.1"},
+      {:arc, "~> 0.11.0"}
     ]
   end
 
