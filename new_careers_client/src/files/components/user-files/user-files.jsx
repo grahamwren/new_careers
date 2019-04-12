@@ -42,7 +42,7 @@ export default class UserFiles extends PureComponent {
 
   render() {
     const {
-      currentUserId, userId, files, emptyText
+      currentUserId, userId, files, emptyText, viewOnly
     } = this.props;
     const allowEdit = !userId || currentUserId === userId;
     const publicFiles = files && files.filter(f => f.public);
@@ -54,10 +54,10 @@ export default class UserFiles extends PureComponent {
         <Table>
           {publicFiles && !!publicFiles.length && (
             <Fragment>
-              {allowEdit && (
+              {!viewOnly && allowEdit && (
                 <TableBody>
                   <TableRow>
-                    <DivCell>Public Files</DivCell>
+                    <DivCell>Shown On Profile</DivCell>
                     <TableCell />
                   </TableRow>
                 </TableBody>
@@ -81,7 +81,7 @@ export default class UserFiles extends PureComponent {
               </TableBody>
             </Fragment>
           )}
-          {allowEdit && privateFiles && !!privateFiles.length && (
+          {!viewOnly && allowEdit && privateFiles && !!privateFiles.length && (
             <Fragment>
               <TableBody>
                 <TableRow>

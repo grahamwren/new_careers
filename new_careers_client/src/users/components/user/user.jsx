@@ -37,7 +37,7 @@ export default class User extends React.Component {
         <Container>
           <Card hidden={!(files && files.length)}>
             {name && <Header>{`${name}'s Files`}</Header>}
-            <UserFiles userId={user.id} />
+            <UserFiles userId={user.id} viewOnly />
           </Card>
           <Card>
             <CardContent style={{ padding: 20 }}>

@@ -51,7 +51,7 @@ export default class FileUploadForm extends React.Component {
           }}
           type="file"
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Upload</Button>
       </Form>
     );
   }
