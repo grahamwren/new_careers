@@ -5,8 +5,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
-import { CardContainer } from '../theme';
+import { CardContainer, Container, Header } from '../theme';
 import api from '../../../api';
+import UserFiles from '../../../files/components/user-files';
 
 export default class User extends React.Component {
   constructor(props) {
@@ -15,14 +16,15 @@ export default class User extends React.Component {
   }
 
   componentDidMount() {
-    const { match: { params: { userId } } } = this.props;
+    const { match: { params: { userId } }, gotFiles } = this.props;
     api.getUser(userId).then(res => this.setState({ user: res.data }));
+    api.listFilesForUser(userId).then(gotFiles);
   }
 
   render() {
     const { user } = this.state;
-    const { history, currentUserId } = this.props;
-
+    const { history, currentUserId, files } = this.props;
+    const name = user.name || user.email;
     const allowEdit = user && user.id === Number(currentUserId);
     return (
       <CardContainer>
@@ -32,13 +34,19 @@ export default class User extends React.Component {
             <Button size="small" onClick={() => history.push('/my-files')}>My Files</Button>
           </CardActions>
         )}
-        <Card>
-          <CardContent style={{ padding: 20 }}>
-            <Typography variant="h4">{user.name}</Typography>
-            <Typography gutterBottom variant="subtitle1" color="textSecondary">{user.email}</Typography>
-            <Markdown source={user.cover_letter} />
-          </CardContent>
-        </Card>
+        <Container>
+          <Card hidden={!(files && files.length)}>
+            {name && <Header>{`${name}'s Files`}</Header>}
+            <UserFiles userId={user.id} />
+          </Card>
+          <Card>
+            <CardContent style={{ padding: 20 }}>
+              <Typography variant="h4">{user.name}</Typography>
+              <Typography gutterBottom variant="subtitle1" color="textSecondary">{user.email}</Typography>
+              <Markdown source={user.cover_letter} />
+            </CardContent>
+          </Card>
+        </Container>
       </CardContainer>
     );
   }
