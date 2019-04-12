@@ -27,10 +27,9 @@ defmodule NewCareersApi.Upload do
   # end
 
   # Override the persisted filenames:
-  #def filename(version, {file, scope}) do
-  #  IO.inspect(%{version: version, file: file, scope: scope})
-  #  "hello-" <> file.file_name
-  #end
+  def filename(version, {file, scope}) do
+    scope.name
+  end
 
   # Override the storage directory:
   def storage_dir(version, {file, scope}) do

@@ -47,7 +47,6 @@ defmodule NewCareersApi.Jobs.Job do
     end
   end
   defp get_maps_url(%Ecto.Changeset{valid?: true, data: %{location: location, maps_url: maps_url}} = changeset) do
-    IO.inspect(changeset)
     if (location && !maps_url) do
       case Maps.get_place_maps_url(location) do
         {:ok, url} -> change(changeset, %{maps_url: url})

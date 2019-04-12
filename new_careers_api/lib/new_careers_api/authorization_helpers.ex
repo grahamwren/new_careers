@@ -17,7 +17,7 @@ defmodule NewCareersApi.AuthorizationHelpers do
   # Jobs ============================================================
   defp authorize_helper(_conn, :show, %Job{} = _job, _params), do: true
   defp authorize_helper(conn, :create, %Job{} = _job, params),
-       do: match_user_id(conn, IO.inspect(params["contact_id"]))
+       do: match_user_id(conn, params["contact_id"])
   defp authorize_helper(conn, :update, %Job{} = job, params),
        do: match_user_id(conn, job.contact_id) &&
            (!params["contact_id"] ||
@@ -51,13 +51,8 @@ defmodule NewCareersApi.AuthorizationHelpers do
        do: match_user_id(conn, user_id)
 
   # Files ===========================================================
-  defp authorize_helper(conn, :show, %File{user_id: user_id}, _params) do
-    match_user_id(conn, user_id) ||
-      Apps.list_apps_for_user(user_id)
-      |> Ecto.assoc(:job)
-      |> Repo.all
-      |> Enum.reduce(false, fn j, acc -> acc || match_user_id(conn, j.contact_id) end)
-  end
+  defp authorize_helper(conn, :show, %File{user_id: user_id, public: public}, _params),
+       do: match_user_id(conn, user_id) || public
   defp authorize_helper(conn, :update, %File{}, %{"user_id" => _u}), do: false
   defp authorize_helper(conn, :create, %File{}, %{"user_id" => user_id}),
        do: match_user_id(conn, user_id)

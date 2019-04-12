@@ -14,6 +14,7 @@ defmodule NewCareersApiWeb.FileView do
   def render("file.json", %{file: file}) do
     %{id: file.id,
       name: file.name,
+      public: file.public,
       user_id: file.user_id,
       upload: "/api/v1" <> Upload.url({file.upload, file})}
   end

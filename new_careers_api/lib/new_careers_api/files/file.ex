@@ -5,6 +5,7 @@ defmodule NewCareersApi.Files.File do
 
   schema "files" do
     field :name, :string
+    field :public, :boolean
     field :upload, NewCareersApi.Upload.Type
     belongs_to :user, NewCareersApi.Users.User
 
@@ -14,9 +15,9 @@ defmodule NewCareersApi.Files.File do
   @doc false
   def changeset(file, attrs) do
     file
-    |> cast(attrs, [:name, :user_id])
-    |> cast_attachments(attrs, [:upload])
+    |> cast(attrs, [:name, :user_id, :public])
     |> unique_constraint(:name)
+    |> cast_attachments(attrs, [:upload])
     |> validate_required([:name, :upload, :user_id])
   end
 end

@@ -11,6 +11,10 @@ import JobSearchForm from '../job-search-form';
 import JobActions from '../job-actions';
 import api from '../../../api';
 
+
+const EmptyText = styled.p`
+  padding: 0 1rem;
+`;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -80,7 +84,7 @@ export default class JobsList extends PureComponent {
             </TableBody>
           </Table>
         </Paper>
-        {jobs && !jobs.length && 'No jobs found for this search'}
+        <EmptyText>{jobs && !jobs.length && 'No jobs found for this search'}</EmptyText>
       </Container>
     );
   }

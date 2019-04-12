@@ -11,21 +11,38 @@ export default {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
-    }).then(r => r.json());
+    });
   },
   listMyFiles() {
     return fetch(`${baseUrl}/files`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
-    }).then(r => r.json());
+    });
+  },
+  listFilesForUser(userId) {
+    return fetch(`${baseUrl}/users/${userId}/files`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  },
+  updateFile(id, file) {
+    return fetch(`${baseUrl}/files/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ file }),
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json'
+      }
+    });
   },
   getFile(id) {
     return fetch(`${baseUrl}/files/${id}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
-    }).then(r => r.json());
+    });
   },
   deleteFile(id) {
     return fetch(`${baseUrl}/files/${id}`, {
@@ -33,6 +50,6 @@ export default {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
-    }).then(r => r.text());
+    });
   }
 };

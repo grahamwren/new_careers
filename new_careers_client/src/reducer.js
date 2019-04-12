@@ -5,6 +5,7 @@ import { jobSearchReducer } from './jobs-search';
 import { userReducer } from './users';
 import { chatReducer } from './chat';
 import { appsReducer } from './apps';
+import { filesReducer } from './files';
 
 export default combineReducers({
   api: apiReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
     sendMessage: (state, { type }) => {
       if (type !== '@@redux-form/SET_SUBMIT_SUCCEEDED') return state;
     }
-  })
+  }),
+  files: filesReducer
 });

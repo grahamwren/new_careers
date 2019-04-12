@@ -1,17 +1,36 @@
 import React from 'react';
+import styled from '@emotion/styled/macro';
 import FormLabel from '@material-ui/core/FormLabel';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { Form } from './theme';
 import api from '../../../api';
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  
+  & > *:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+`;
 
 export default class FileUploadForm extends React.Component {
   handleSubmit() {
+    const { gotFile } = this.props;
     const data = {
       file: this.uploader.files[0],
       fileName: this.fileName.value
     };
-    api.uploadFile(data);
+    if (data.file !== undefined && data.fileName !== undefined) {
+      api.uploadFile(data)
+        .then(gotFile)
+        .then(() => {
+          this.fileName.value = '';
+          this.uploader.value = '';
+        });
+    } else {
+      throw new Error('Missing Require Field');
+    }
   }
 
   render() {
@@ -32,16 +51,8 @@ export default class FileUploadForm extends React.Component {
           }}
           type="file"
         />
-        <Button type="submit" >Submit</Button>
+        <Button type="submit">Submit</Button>
       </Form>
     );
   }
 }
-
-// export default class ({ handleSubmit }) => (
-//   <Form onSubmit={handleSubmit}>
-//     <FormLabel>Upload File</FormLabel>
-//     <UploadComponent />
-//     <Button type="submit">Submit Changes</Button>
-//   </Form>
-// );
