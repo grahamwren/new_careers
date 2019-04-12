@@ -11,6 +11,28 @@ export default {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
-    });
+    }).then(r => r.json());
+  },
+  listMyFiles() {
+    return fetch(`${baseUrl}/files`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    }).then(r => r.json());
+  },
+  getFile(id) {
+    return fetch(`${baseUrl}/files/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    }).then(r => r.json());
+  },
+  deleteFile(id) {
+    return fetch(`${baseUrl}/files/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    }).then(r => r.text());
   }
 };

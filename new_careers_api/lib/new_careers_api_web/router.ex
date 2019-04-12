@@ -21,6 +21,7 @@ defmodule NewCareersApiWeb.Router do
     pipe_through :with_auth
     resources "/users", UserController, except: [:new, :create, :edit] do
       get "/apps", AppController, :index
+      get "/files", FileController, :index
     end
 
     resources "/files", FileController, except: [:new, :edit]

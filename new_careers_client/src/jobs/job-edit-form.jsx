@@ -57,7 +57,9 @@ const JobEditForm = ({ handleSubmit, formTitle, submitTitle }) => (
       name="description"
       component={TextFieldAdapter}
       type="text"
+      multiline
       variant="outlined"
+      helperText="Description is a Markdown field"
     />
     <Button type="submit">{submitTitle || 'Submit Changes'}</Button>
   </Form>

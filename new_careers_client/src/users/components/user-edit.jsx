@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { EditContainer } from './theme';
+import { CardContainer } from './theme';
 import UserEditForm from './user-edit-form';
 import api from '../../api';
 
@@ -32,9 +32,9 @@ export default class UserEdit extends PureComponent {
     const { user } = this.state;
 
     return (
-      <EditContainer>
+      <CardContainer>
         <UserEditForm onSubmit={data => this.editUser(data)} initialValues={user} />
-      </EditContainer>
+      </CardContainer>
     );
   }
 }

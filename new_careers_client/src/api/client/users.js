@@ -1,5 +1,5 @@
-import $ from 'jquery';
 import { baseUrl } from '../../config';
+import HttpError from '../http-error';
 
 export default {
   createUser(jsUser) {
@@ -9,46 +9,51 @@ export default {
       name: jsUser.name,
       cover_letter: jsUser.coverLetter
     };
-    return $.ajax(`${baseUrl}/users`, {
+    return fetch(`${baseUrl}/users`, {
       method: 'POST',
-      data: JSON.stringify({ user }),
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Content-Type', 'application/json');
+      body: JSON.stringify({ user }),
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json'
       }
     });
   },
   loginUser(email, password) {
-    return $.ajax(`${baseUrl}/login`, {
+    return fetch(`${baseUrl}/login`, {
       method: 'POST',
-      data: JSON.stringify({ email, password }),
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Content-Type', 'application/json');
+      body: JSON.stringify({ email, password }),
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json'
       }
-    }).then((resp) => {
+    }).then(async (resp) => {
+      if (!resp.ok) throw new HttpError(resp);
+
+      const body = await resp.json();
       // Set token on client
-      if (resp.data && resp.data.token) {
-        this.setToken(resp.data.token);
+      if (body.data && body.data.token) {
+        this.setToken(body.data.token);
       }
-      // Sanitize token from resp
+      // rebuild resp object for aspect
       return {
-        ...resp,
-        data: { ...resp.data, token: undefined }
+        ...body,
+        data: { ...body.data, token: undefined }
       };
     });
   },
   getUsers() {
-    return $.ajax(`${baseUrl}/users`, {
+    return fetch(`${baseUrl}/users`, {
       method: 'GET',
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+      headers: {
+        Authorization: `Bearer ${this.token}`
       }
     });
   },
   getUser(id) {
-    return $.ajax(`${baseUrl}/users/${id}`, {
+    return fetch(`${baseUrl}/users/${id}`, {
       method: 'GET',
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+      headers: {
+        Authorization: `Bearer ${this.token}`
       }
     });
   },
@@ -59,21 +64,20 @@ export default {
       name: data.name,
       cover_letter: data.cover_letter || data.coverLetter
     };
-    return $.ajax(`${baseUrl}/users/${id}`, {
-      type: 'PUT',
-      data: JSON.stringify({ user }),
-      contentType: 'application/json',
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
-        xhr.setRequestHeader('Content-Type', 'application/json');
+    return fetch(`${baseUrl}/users/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ user }),
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json'
       }
     });
   },
   deleteUser(id) {
-    return $.ajax(`${baseUrl}/users/${id}`, {
-      type: 'DELETE',
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+    return fetch(`${baseUrl}/users/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${this.token}`
       }
     });
   }

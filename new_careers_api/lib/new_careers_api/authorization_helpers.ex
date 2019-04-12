@@ -52,10 +52,11 @@ defmodule NewCareersApi.AuthorizationHelpers do
 
   # Files ===========================================================
   defp authorize_helper(conn, :show, %File{user_id: user_id}, _params) do
-    Apps.list_apps_for_user(user_id)
-    |> Ecto.assoc(:job)
-    |> Repo.all
-    |> Enum.reduce(false, fn j, acc -> acc || match_user_id(conn, j.contact_id) end)
+    match_user_id(conn, user_id) ||
+      Apps.list_apps_for_user(user_id)
+      |> Ecto.assoc(:job)
+      |> Repo.all
+      |> Enum.reduce(false, fn j, acc -> acc || match_user_id(conn, j.contact_id) end)
   end
   defp authorize_helper(conn, :update, %File{}, %{"user_id" => _u}), do: false
   defp authorize_helper(conn, :create, %File{}, %{"user_id" => user_id}),

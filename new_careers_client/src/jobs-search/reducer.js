@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions';
+import keyBy from 'lodash/keyBy';
 import { gotJobSearchResults, jobDeleted, gotJob } from './actions';
 
 const translateJobToJS = job => ({
@@ -12,17 +13,20 @@ const translateJobToJS = job => ({
 export default handleActions({
   [gotJobSearchResults]: (state, { payload }) => ({
     ...state,
-    data: payload.data && payload.data.map(translateJobToJS)
+    data: payload.data && keyBy(payload.data.map(translateJobToJS), 'id')
   }),
   [jobDeleted]: (state, { payload: { id } }) => ({
     ...state,
-    data: state.data && state.data.filter(job => job.id !== id)
+    data: state.data && {
+      ...state.data,
+      [id]: undefined
+    }
   }),
   [gotJob]: (state, { payload: { data } }) => ({
     ...state,
-    data: [
-      ...(state.data || []),
-      data
-    ]
+    data: {
+      ...(state.data || {}),
+      [data.id]: translateJobToJS(data)
+    }
   })
 }, {});

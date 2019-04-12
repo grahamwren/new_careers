@@ -21,6 +21,10 @@ defmodule NewCareersApi.Files do
     Repo.all(File)
   end
 
+  def list_files_for_user(user_id) do
+    Repo.all(from f in File, where: f.user_id == ^user_id)
+  end
+
   @doc """
   Gets a single file.
 

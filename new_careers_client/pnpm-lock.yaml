@@ -4,7 +4,6 @@ dependencies:
   '@emotion/styled-base': 10.0.9
   '@material-ui/core': 3.9.2
   '@material-ui/icons': 3.0.2
-  jquery: 3.3.1
   lodash: 4.17.11
   luxon: 1.12.0
   phoenix: 1.4.3
@@ -6591,10 +6590,6 @@ packages:
       node: '>=4.0.0'
     resolution:
       integrity: sha512-O7Uw+w/zEWgbL6OcHbyACKSj0PkQeUgmehdoXVSxt92QFCq4+1390Rwh5moI2K/OgC7D8RHRZqHZxT2husMJHA==
-  /jquery/3.3.1:
-    dev: false
-    resolution:
-      integrity: sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
   /js-levenshtein/1.1.6:
     dev: false
     engines:
@@ -11634,7 +11629,6 @@ specifiers:
   '@emotion/styled-base': ^10.0.9
   '@material-ui/core': 3.9.2
   '@material-ui/icons': ^3.0.2
-  jquery: ^3.3.1
   lodash: ^4.17.11
   luxon: ^1.11.4
   phoenix: ^1.4.3

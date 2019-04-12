@@ -39,6 +39,7 @@ const UserEditForm = ({ handleSubmit }) => (
       type="text"
       multiline
       variant="outlined"
+      helperText="Cover letter is a Markdown field"
     />
     <Button type="submit">Submit Changes</Button>
   </Form>

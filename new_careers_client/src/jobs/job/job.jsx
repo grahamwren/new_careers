@@ -4,15 +4,29 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Markdown from 'react-markdown';
 import { CardContainer, AppListCard } from '../theme';
 import api from '../../api';
 import { AppList } from '../../apps/components';
 
 export default class Job extends React.PureComponent {
   componentDidMount() {
-    const { jobId, gotJob, gotApps } = this.props;
+    const {
+      currentUserId, jobId, job, gotJob, gotApps
+    } = this.props;
     api.getJob(jobId).then(gotJob);
-    api.getAppsForJob(jobId).then(gotApps);
+    if (job && job.contactId === Number(currentUserId)) {
+      api.getAppsForJob(jobId).then(gotApps);
+    }
+  }
+
+  componentDidUpdate() {
+    const {
+      job, jobId, currentUserId, gotApps, apps
+    } = this.props;
+    if (job && job.contactId === Number(currentUserId) && !apps) {
+      api.getAppsForJob(jobId).then(gotApps);
+    }
   }
 
   render() {
@@ -34,17 +48,19 @@ export default class Job extends React.PureComponent {
               <Typography variant="h4">{job.title}</Typography>
               <Typography gutterBottom variant="subtitle1" color="textSecondary">{job.location}</Typography>
               <Typography gutterBottom variant="subtitle2">{job.salary_type}: {job.salary}</Typography>
-              <Typography variant="body1">{job.description}</Typography>
+              <Markdown source={job.description} />
             </CardContent>
           )}
         </Card>
         <AppListCard>
           <Card>
-            {allowEdit && (
+            {apps && allowEdit && (
               <AppList
                 apps={apps}
                 isEdit={job.contactId === Number(currentUserId)}
                 history={history}
+                emptyText="No applications yet"
+                showUsers
               />
             )}
           </Card>

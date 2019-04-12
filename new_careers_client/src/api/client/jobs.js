@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import qs from 'query-string';
 import { baseUrl } from '../../config';
 
@@ -13,28 +12,28 @@ export default {
       salary_type: job.salary_type || job.salaryType,
       contact_id: job.contact_id || job.contactId
     };
-    return $.ajax(`${baseUrl}/jobs`, {
+    return fetch(`${baseUrl}/jobs`, {
       method: 'POST',
-      data: JSON.stringify({ job: jobData }),
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
-        xhr.setRequestHeader('Content-Type', 'application/json');
+      body: JSON.stringify({ job: jobData }),
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json'
       }
     });
   },
   getJobs() {
-    return $.ajax(`${baseUrl}/jobs`, {
+    return fetch(`${baseUrl}/jobs`, {
       method: 'GET',
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+      headers: {
+        Authorization: `Bearer ${this.token}`
       }
     });
   },
   getJob(id) {
-    return $.ajax(`${baseUrl}/jobs/${id}`, {
+    return fetch(`${baseUrl}/jobs/${id}`, {
       method: 'GET',
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+      headers: {
+        Authorization: `Bearer ${this.token}`
       }
     });
   },
@@ -48,21 +47,20 @@ export default {
       salary_type: data.salary_type || data.salaryType,
       contact_id: data.contact_id || data.contactId
     };
-    return $.ajax(`${baseUrl}/jobs/${id}`, {
-      type: 'PUT',
-      data: JSON.stringify({ job }),
-      contentType: 'application/json',
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
-        xhr.setRequestHeader('Content-Type', 'application/json');
+    return fetch(`${baseUrl}/jobs/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ job }),
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json'
       }
     });
   },
   deleteJob(id) {
-    return $.ajax(`${baseUrl}/jobs/${id}`, {
-      type: 'DELETE',
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+    return fetch(`${baseUrl}/jobs/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${this.token}`
       }
     });
   },
@@ -72,18 +70,18 @@ export default {
     const args = {
       q: query, ob: orderBy, dir: orderDir, start, lim: limit
     };
-    return $.ajax(`${baseUrl}/jobs/search?${qs.stringify(args)}`, {
-      type: 'GET',
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+    return fetch(`${baseUrl}/jobs/search?${qs.stringify(args)}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${this.token}`
       }
     });
   },
   applyToJob(id) {
-    return $.ajax(`${baseUrl}/jobs/${id}/apply`, {
-      type: 'POST',
-      beforeSend: (xhr) => {
-        xhr.setRequestHeader('Authorization', `Bearer ${this.token}`);
+    return fetch(`${baseUrl}/jobs/${id}/apply`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${this.token}`
       }
     });
   }

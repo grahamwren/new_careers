@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
-import { SubmissionError } from 'redux-form';
-import { EditContainer } from './theme';
+import { CardContainer } from './theme';
 import JobEditForm from './job-edit-form';
 import api from '../api';
 
@@ -38,9 +37,9 @@ export default class JobEdit extends PureComponent {
     const { job } = this.state;
 
     return (
-      <EditContainer>
+      <CardContainer>
         <JobEditForm onSubmit={data => this.editJob(data)} initialValues={job} />
-      </EditContainer>
+      </CardContainer>
     );
   }
 }

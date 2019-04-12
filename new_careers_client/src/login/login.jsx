@@ -15,7 +15,7 @@ export default class Login extends PureComponent {
           _error: 'Login Failed'
         });
       }
-      throw error.statusText;
+      throw error;
     });
   }
 

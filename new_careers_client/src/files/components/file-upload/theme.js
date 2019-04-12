@@ -5,7 +5,7 @@ export const Container = styled.div`
   @media(min-width: 30rem) {
     width: 28rem;
   }
-  margin-top: 5rem;
+  margin: 1rem 0;
 `;
 
 export const Form = styled.form`

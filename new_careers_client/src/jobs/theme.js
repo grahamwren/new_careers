@@ -5,7 +5,7 @@ export const CardContainer = styled.div`
   @media(min-width: 50rem) {
     width: 80%;
   }
-  margin-top: 5rem;
+  margin: 1rem 0;
 `;
 
 export const AppListCard = styled.div`
