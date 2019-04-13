@@ -17,7 +17,7 @@ If redo, what did you fix?
 If enhance, what enhancements did you make? Use at least a couple paragraphs to
 describe your goals and how you did at meeting them.
 
-Currently our project, a jobs board where users can apply to and post jobs,
+Currently, our project, a jobs board where users can apply to and post jobs,
 doesn't support file upload. This was a design choice for our MVP because
 uploading files to our API through React is more complicated than a normal
 Phoenix application. Additionally, the relationships of files to users, such as
@@ -26,7 +26,7 @@ case. To simplify our original application we support Markdown for user cover
 letters, this formatted cover letter is then prominently displayed on the user
 profile page. This allows our users to have a resume-like description of themselves
 which can include any information they like, linked files, pictures, and all the
-other options Markdown supports. However this choice still forces our users to
+other options Markdown supports. However, this choice still forces our users to
 recreate documents they've already put work into in our format. We'd prefer to
 have a way for users to upload their resume a have us display it to recruiters.
 
@@ -41,18 +41,18 @@ to using fetch.
 
 The next challenge was to allow Phoenix to support uploaded files. The built-in
 parsers for requests to Phoenix support file uploads as a Plug, and pass through
-a Upload object in the payload. To handle these temporarily uploaded files, and
+an Upload object in the payload. To handle these temporarily uploaded files, and
 save them to our database, I used the arc and arc_ecto hex packages. These allowed
 me to create a Files table in our database which saves the arc_ecto related file object,
 a name for the file, whether the file should be publicly accessible, and the user to
-which the file belongs. This allowed each to user to have a collection of files which
+which the file belongs. This allowed each user to have a collection of files which
 they could name anything they like rather than forcing each user to upload a file to
 a resume field.
 
-I think built the use-case for our files around this ability to relate a user to a
+I then built the use-case for our files around this ability to relate a user to a
 set of named files. Like in NuCareers a user is able to upload files to a collection
 of files which they own. They can then choose to show one or some of these files to
-recruiters who look at their application. However to simplify our database, I changed
+recruiters who look at their application. However, to simplify our database, I changed
 the model from attaching certain files to a job application to simply showing certain
 files on a user's profile page. This way they can have a cover letter, resume, and
 portfolio all available to recruiters who look at their profile from their application.
@@ -69,3 +69,4 @@ If enhance, where (what URL) is your enhanced project deployed? Where's the git 
 I developed my enhancement on a branch of our original repo.
 That branch is here: https://github.com/grahamwren/new_careers/tree/enhance-project
 The enhanced project is deployed here: https://NewestCareers.cs4550.maineisland.co
+The release is here: https://github.com/grahamwren/new_careers/releases/tag/v1.1.0
