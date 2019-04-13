@@ -1,0 +1,71 @@
+CS3650 Spring 2019, Redo or Enhance.
+
+Did you chose to redo a previous assignment or enhance a project?
+
+Enhance a project
+
+
+Which one?
+
+The second one
+
+
+If redo, what did you fix?
+
+
+
+If enhance, what enhancements did you make? Use at least a couple paragraphs to
+describe your goals and how you did at meeting them.
+
+Currently our project, a jobs board where users can apply to and post jobs,
+doesn't support file upload. This was a design choice for our MVP because
+uploading files to our API through React is more complicated than a normal
+Phoenix application. Additionally, the relationships of files to users, such as
+a resume or a cover letter vs a portfolio, needed to be flushed out as a use
+case. To simplify our original application we support Markdown for user cover
+letters, this formatted cover letter is then prominently displayed on the user
+profile page. This allows our users to have a resume-like description of themselves
+which can include any information they like, linked files, pictures, and all the
+other options Markdown supports. However this choice still forces our users to
+recreate documents they've already put work into in our format. We'd prefer to
+have a way for users to upload their resume a have us display it to recruiters.
+
+The first challenge for implementing file upload was to be able to send a file to
+our API. After some research, I learned this is apparently done with a multipart
+request, one part for sending the file metadata and the other to stream the actual
+file to the server. Ajax does not support posting a body with the FormData type
+which is required for this type of request so I had to use fetch for this request.
+Fetch requests and responses use a very different API to Ajax and so in order for my
+error handling aspects to continue to work I needed to migrate the entire API client
+to using fetch.
+
+The next challenge was to allow Phoenix to support uploaded files. The built-in
+parsers for requests to Phoenix support file uploads as a Plug, and pass through
+a Upload object in the payload. To handle these temporarily uploaded files, and
+save them to our database, I used the arc and arc_ecto hex packages. These allowed
+me to create a Files table in our database which saves the arc_ecto related file object,
+a name for the file, whether the file should be publicly accessible, and the user to
+which the file belongs. This allowed each to user to have a collection of files which
+they could name anything they like rather than forcing each user to upload a file to
+a resume field.
+
+I think built the use-case for our files around this ability to relate a user to a
+set of named files. Like in NuCareers a user is able to upload files to a collection
+of files which they own. They can then choose to show one or some of these files to
+recruiters who look at their application. However to simplify our database, I changed
+the model from attaching certain files to a job application to simply showing certain
+files on a user's profile page. This way they can have a cover letter, resume, and
+portfolio all available to recruiters who look at their profile from their application.
+
+The UI is then built around this idea. Users are able to see a my-files tab on their
+profile page, where they can upload private files and name them whatever. They can
+then choose some or all of these files to make public. Once a user has public files
+those files show up on their profile page and are now available to other users.
+
+
+
+If enhance, where (what URL) is your enhanced project deployed? Where's the git repo?
+
+I developed my enhancement on a branch of our original repo.
+That branch is here: https://github.com/grahamwren/new_careers/tree/enhance-project
+The enhanced project is deployed here: https://NewestCareers.cs4550.maineisland.co

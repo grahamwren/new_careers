@@ -2,7 +2,19 @@
 
 like NuCareers but newer
 
-## Project Enhancement
+This is the enhanced version by Graham Wren, based on
+work by Graham Wren and Jonathan Tseng.
+
+Enhancements:
+
+- [x] User file upload now available
+- [x] Job description now supports markdown
+- [x] Application row now shows user's name
+- [x] API client migrated to fetch from ajax
+- [ ] UI displays errors
+
+
+## Primary Enhancement
 
 __Proposal:__ File Upload
 

@@ -1,16 +1,16 @@
 [Unit]
-Description=New Careers API
+Description=Newest Careers API
 
 [Service]
 Type=simple
-User=new_careers_api
-Group=new_careers_api
+User=newest_careers
+Group=newest_careers
 Restart=on-failure
-Environment=MIX_ENV=prod "PORT=4797"
+Environment=MIX_ENV=prod "PORT=4798"
 Environment=LANG=en_US.UTF-8
 
-WorkingDirectory=/home/new_careers_api/new_careers/new_careers_api
-ExecStart=/home/new_careers_api/new_careers/new_careers_api/start.sh
+WorkingDirectory=/home/newest_careers/new_careers/new_careers_api
+ExecStart=/home/newest_careers/new_careers/new_careers_api/start.sh
 
 [Install]
 WantedBy=multi-user.target
