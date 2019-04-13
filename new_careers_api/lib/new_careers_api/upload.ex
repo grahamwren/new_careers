@@ -33,7 +33,7 @@ defmodule NewCareersApi.Upload do
 
   # Override the storage directory:
   def storage_dir(version, {file, scope}) do
-    "uploads/#{scope.user_id}"
+    (Application.get_env(:new_careers_api, :file_storage_path) || "") <> "uploads/#{scope.user_id}"
   end
 
   # Provide a default URL if there hasn't been a file uploaded

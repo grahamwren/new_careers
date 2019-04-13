@@ -16,6 +16,13 @@ defmodule NewCareersApiWeb.FileView do
       name: file.name,
       public: file.public,
       user_id: file.user_id,
-      upload: "/api/v1" <> Upload.url({file.upload, file})}
+      upload: get_file_url(file)}
+  end
+
+  defp get_file_url(file) do
+    base_url = Upload.url({file.upload, file})
+    file_store_path = Application.get_env(:new_careers_api, :file_storage_path)
+    url = if file_store_path, do: String.replace(base_url, file_store_path, "/"), else: base_url
+    "/api/v1" <> url
   end
 end
